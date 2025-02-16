@@ -1,0 +1,105 @@
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+canvas.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+
+}
+.title {
+  color: #7B8290;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 80px;
+}
+
+.camera-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.camera-square {
+  width: 100%;
+  height: 350px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+
+.text {
+  position: absolute;
+}
+
+.button {
+  margin-top: 10px;
+  width: 120px;
+  text-align: center;
+  background-color: #168BF2;
+}
+
+.content-bottom {
+  overflow: auto;
+  width: 100%;
+  height: calc(100% - 60px);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.menu-button {
+  all: unset;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 10%;
+  font-size: 16px;
+  font-weight: 300;
+  color: #757575;
+  margin-left: 90%;
+  margin-top: -50px;
+}
+.perfil {
+  max-width: 50%;
+  margin-left: -60%;
+  display:flex;
+}
+
+.menu-button .icon {
+  margin-left: 130px;
+}
+
+.menu-button .icon:hover {
+  color: #055FFC;
+}
+
+
+
+
+
+

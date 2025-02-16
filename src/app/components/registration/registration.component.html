@@ -1,0 +1,62 @@
+<h1 class="title">Cadastro</h1>
+
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Lista de Funcionários</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <button
+        mat-raised-button
+        color="primary"
+        routerLink="/home/adicionar-funcionario"
+        class="add-button"
+      >
+        <mat-icon>add</mat-icon>
+        Adicionar Funcionário
+      </button>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Nome Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let employee"> {{employee.nome}} </td>
+        </ng-container>
+
+        <!-- Matrícula Column -->
+        <ng-container matColumnDef="registration">
+          <th mat-header-cell *matHeaderCellDef> Matrícula </th>
+          <td mat-cell *matCellDef="let employee"> {{employee.matricula}} </td>
+        </ng-container>
+
+        <!-- Cargo Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> Cargo </th>
+          <td mat-cell *matCellDef="let employee"> {{employee.cargo}} </td>
+        </ng-container>
+
+        <!-- Ações Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Ações </th>
+          <td mat-cell *matCellDef="let employee">
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteEmployee(employee.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+      ></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

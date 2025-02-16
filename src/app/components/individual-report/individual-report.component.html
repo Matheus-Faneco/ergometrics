@@ -1,0 +1,67 @@
+<div class="header">
+  <h1 class="title">Relatório individual</h1>
+
+  <p-autoComplete [(ngModel)]="selectedUser"
+                  [suggestions]="filteredEmployee"
+                  (completeMethod)="filterUsers($event)"
+                  placeholder="Pesquisar funcionário"
+                  field="nome">
+  </p-autoComplete>
+  <p-button
+    label="Confirmar"
+  />
+</div>
+
+<div class="container">
+  <!-- Seção Superior -->
+  <div class="top-section">
+
+    <!-- TOTAL DE ALERTAS -->
+    <mat-card class="card">
+      <span class="text">Total de alertas</span>
+      <div class="content">
+        <p class="alert-number">{{ getAlertNumber() }}</p>
+      </div>
+    </mat-card>
+
+    <!-- TEMPO TOTAL EM MÁ POSTURA -->
+    <mat-card class="card">
+      <span class="text">Tempo total de má postura</span>
+      <div class="content">
+        <p class="time-bad-posture">{{ getTotalTimeBadPosture() }}</p>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Seção Inferior -->
+  <div class="bottom-section">
+    <!-- HISTÓRICO -->
+    <mat-card class="card-bottom">
+      <span class="text-bottom">Histórico</span>
+      <div class="content-bottom">
+        <p-table [value]="historyData" [tableStyle]="{ 'min-height': '20rem' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Data</th>
+              <th>Duração (segundos)</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td>{{ item.date }}</td>
+              <td>{{ item.duration }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </mat-card>
+
+    <!-- GRÁFICO DE DESEMPENHO -->
+    <mat-card class="card-bottom">
+      <span class="text-bottom">Desempenho de postura</span>
+      <div class="content-bottom">
+        <canvas #canvas></canvas>
+      </div>
+    </mat-card>
+  </div>
+</div>

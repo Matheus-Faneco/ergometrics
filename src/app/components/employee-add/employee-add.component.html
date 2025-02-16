@@ -1,0 +1,59 @@
+<div class="container">
+  <p-card>
+    <ng-template pTemplate="header">
+      <h2>Cadastro de Funcionário</h2>
+    </ng-template>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <div class="p-field full-width">
+        <label for="nome" class="p-label">Nome</label>
+        <input
+          pInputText
+          id="nome"
+          formControlName="nome"
+          class="w-full"
+        >
+        @if (employeeForm.get('nome')?.hasError('required')) {
+          <small class="p-error">Nome é obrigatório</small>
+        }
+      </div>
+
+      <div class="p-field full-width">
+        <label for="matricula" class="p-label">Matrícula</label>
+        <input
+          pInputText
+          id="matricula"
+          formControlName="matricula"
+          type="number"
+          class="w-full"
+        >
+        @if (employeeForm.get('matricula')?.hasError('required')) {
+          <small class="p-error">Matrícula é obrigatória</small>
+        }
+      </div>
+
+      <div class="p-field full-width">
+        <label for="cargo" class="p-label">Cargo</label>
+        <input
+          pInputText
+          id="cargo"
+          formControlName="cargo"
+          class="w-full"
+        >
+        @if (employeeForm.get('cargo')?.hasError('required')) {
+          <small class="p-error">Cargo é obrigatório</small>
+        }
+      </div>
+
+      <div class="button-container">
+        <button
+          pButton
+          type="submit"
+          label="Salvar"
+          severity="primary"
+          [disabled]="!employeeForm.valid"
+        ></button>
+      </div>
+    </form>
+  </p-card>
+</div>

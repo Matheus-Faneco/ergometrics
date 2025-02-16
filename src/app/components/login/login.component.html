@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="login-form">
+    <img src="assets/images/logo.png" alt="logo" class="logo">
+    <div class="container">
+      <div class="main">
+        <div class="content">
+          <h2>Login</h2>
+          <div>
+            <input type="tel" pInputText formControlName="matricula" maxlength="6" placeholder="Matrícula"/>
+          </div>
+          <div>
+            <p-password formControlName="password" placeholder="Senha"></p-password>
+          </div>
+          <p-button type="submit" label="Entrar" class="btn"></p-button>
+        </div>
+        <div class="form-img">
+          <img src="/assets/images/bg.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

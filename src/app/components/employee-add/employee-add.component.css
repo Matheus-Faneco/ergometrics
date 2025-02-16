@@ -1,0 +1,35 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.p-card {
+  padding: 2rem;
+}
+
+.p-field {
+  margin-bottom: 1.5rem;
+}
+
+.p-field .p-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.p-inputtext {
+  width: 100%;
+  padding: 0.75rem;
+}
+
+.button-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+small.p-error {
+  display: block;
+  margin-top: 0.25rem;
+}

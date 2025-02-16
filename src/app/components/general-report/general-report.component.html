@@ -1,0 +1,42 @@
+<h1 class="title">Relatório Geral</h1>
+
+<div class="container">
+  <!-- Seção Superior -->
+  <div class="top-section">
+    <!-- TOTAL DE ALERTAS -->
+    <mat-card class="card">
+      <span class="text">Total de alertas</span>
+      <div class="content">
+        <p class="total-alerts">{{ getTotalAlertsGeneral() }}</p>
+      </div>
+    </mat-card>
+
+    <!-- OBSERVAÇÕES -->
+    <mat-card class="card">
+      <span class="text">Observações</span>
+      <div class="content">
+        <p class="observation">teste</p>
+      </div>
+    </mat-card>
+  </div>
+  <!-- Fim da Seção Superior -->
+
+  <!-- Seção Inferior -->
+  <div class="bottom-section">
+    <!-- MÉDIA GERAL -->
+    <mat-card class="card-bottom">
+      <span class="text-bottom">Média geral de segundos</span>
+      <div class="content-bottom">
+        <p class="average-time">{{ getAverageTime() }}</p>
+      </div>
+    </mat-card>
+
+    <!-- GRÁFICO DE DESEMPENHO -->
+    <mat-card class="card-bottom">
+      <span class="text-bottom">Desempenho de postura</span>
+      <div class="content-bottom">
+        <canvas #canvas></canvas>
+      </div>
+    </mat-card>
+  </div>
+</div>

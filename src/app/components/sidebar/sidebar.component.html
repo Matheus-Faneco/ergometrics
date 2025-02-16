@@ -1,0 +1,78 @@
+<!--O QUE FAZER: -->
+<!--TROCAR CONDICIONAIS PARA @IF-->
+<!--MELHORIAS:-->
+<!--COR AZUL SE MANTER AO ESTAR NA ABA CORRESPONDENTE-->
+<!--ANIMAÇAO QUANDO OS SUBMENUS APARECEREM AO CLICAR EM 'RELATORIO'-->
+<!--BOTÃO DE MANUAL DE USUÁRIO LÁ EMBAIXO-->
+
+<div class="container">
+  <div class="sidebar">
+    <div class="head">
+      <div class="logo">
+        <img src="../../../assets/images/logo.png" alt="Logo" routerLink="/home">
+      </div>
+    </div>
+    <div class="nav">
+      <div class="menu">
+        <ul>
+          <!-- ACOMPANHAMENTO -->
+          <li class="content">
+            <button routerLink="/home/acompanhamento" class="menu-button">
+              <i class="icon material-icons">videocam</i>
+              <span class="text">Acompanhamento</span>
+            </button>
+          </li>
+
+          <!-- RELATÓRIO -->
+          <li>
+            <button class="menu-button" (click)="toggleSubMenu('relatorio')">
+              <i class="icon material-icons">description</i>
+              <span class="text">Relatório</span>
+              <i class="icon material-icons">keyboard_arrow_down</i>
+            </button>
+
+            <!-- RELATÓRIO INDIVIDUAL -->
+            <ul class="sub-menu" *ngIf="openSubMenu === 'relatorio'">
+              <li>
+                <button routerLink="/home/relatorio-individual" class="menu-button">
+                  <span class="text">Relatório individual</span>
+                </button>
+              </li>
+
+              <!-- RELATÓRIO GERAL -->
+              <li>
+                <button routerLink="/home/relatorio-geral" class="menu-button">
+                  <span class="text">Relatório geral</span>
+                </button>
+              </li>
+            </ul>
+
+          </li>
+
+          <!-- CADASTRO DE FUNCIONÁRIO -->
+          <li>
+            <button routerLink="/home/cadastro" class="menu-button">
+              <i class="icon material-icons">person_add</i>
+              <span class="text">Cadastro</span>
+            </button>
+          </li>
+
+          <!-- MANUAL DO USUÁRIO -->
+          <li>
+            <button routerLink="/home/manual" class="menu-button">
+              <i class="icon material-icons">help</i>
+              <span class="text-guide">Manual do usuário</span>
+            </button>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--CONTEÚDO PRINCIPAL DAS PÁGINAS-->
+<div class="main-content">
+  <router-outlet/>
+</div>
+

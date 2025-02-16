@@ -1,0 +1,88 @@
+.title {
+  color: #7B8290;
+}
+.header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px;
+}
+
+.top-section,
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+  height: 250px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  background-color: #168BF2;
+  position: relative;
+}
+
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 90px;
+  width: 500px;
+  height: 380px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.text, .text-bottom {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.text-bottom {
+  color: #7B8290;
+}
+
+.current-posture, .alert-number, .time-bad-posture {
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-size: 70px;
+  font-weight: bold;
+}
+
+
+.content {
+  margin-top: 50px;
+  width: 100%;
+  height: calc(100% - 60px);
+  background-color: #168BF2;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+}
