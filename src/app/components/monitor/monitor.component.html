@@ -1,26 +1,21 @@
 <h1 class="title">Acompanhamento</h1>
 
 <div class="container">
+  <!-- Câmera 1 -->
   <mat-card class="camera-card">
     <div class="camera-square">
       <video #video1 class="video" autoplay></video>
-      <canvas #canvas1 class="overlay"></canvas> <!-- Canvas para desenho de keypoints -->
+      <canvas #canvas1 class="overlay"></canvas>
     </div>
-    <button mat-flat-button color="warn" class="button">
-      Iniciar Camera 1
-    </button>
 
   </mat-card>
 
+  <!-- Câmera 2 -->
   <mat-card class="camera-card">
     <div class="camera-square">
-      <!-- Video 2 -->
       <video #video2 class="video" autoplay></video>
-      <canvas #canvas2 class="overlay"></canvas> <!-- Canvas para desenho de keypoints -->
+      <canvas #canvas2 class="overlay"></canvas>
     </div>
-    <button mat-flat-button color="warn" class="button">
-      Iniciar Camera 2
-    </button>
 
   </mat-card>
 </div>
