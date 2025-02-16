@@ -8,39 +8,41 @@ import { Camera } from '@mediapipe/camera_utils';
   providedIn: 'root',
 })
 export class CamService {
-  private streams: Map<string, MediaStream> = new Map();
-  private poses: Map<string, Pose> = new Map();
-  private cameras: Map<string, Camera> = new Map();
-  private canvasElements: Map<string, HTMLCanvasElement> = new Map();
+  private streams = new Map<string, MediaStream>();
+  private poses = new Map<string, Pose>();
+  private cameras = new Map<string, Camera>();
+  private canvases = new Map<string, HTMLCanvasElement>();
 
-  constructor() {}
+  async startCamera(
+    deviceId: string,
+    videoElement: HTMLVideoElement,
+    canvasElement: HTMLCanvasElement
+  ): Promise<void> {
+    // Parar se já existir
+    if (this.streams.has(deviceId)) this.stopCamera(deviceId);
 
-  async startCamera(deviceId: string, videoElement: HTMLVideoElement, canvasElement: HTMLCanvasElement): Promise<void> {
-    // Parar a câmera se já estiver em uso
-    if (this.streams.has(deviceId)) {
-      this.stopCamera(deviceId);
-    }
+    // Configurar canvas
+    canvasElement.width = 640;
+    canvasElement.height = 480;
+    this.canvases.set(deviceId, canvasElement);
 
-    // Criar um novo stream para a câmera
+    // Iniciar stream
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: { deviceId: { exact: deviceId }, width: 640, height: 480 },
+      video: { deviceId: { exact: deviceId }, width: 640, height: 480 }
     });
     this.streams.set(deviceId, stream);
 
-    // Conectar o stream ao elemento de vídeo
     videoElement.srcObject = stream;
     await videoElement.play();
 
-    // Inicializar o MediaPipe Pose para esta câmera
-    this.initializePose(deviceId, videoElement, canvasElement);
+    // Inicializar Pose para esta câmera
+    this.initializePose(deviceId, videoElement);
   }
 
-  private initializePose(deviceId: string, videoElement: HTMLVideoElement, canvasElement: HTMLCanvasElement) {
+  private initializePose(deviceId: string, videoElement: HTMLVideoElement) {
     const pose = new Pose({
-      locateFile: (file) => {
-        // Adiciona um sufixo único ao arquivo para evitar conflitos
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}?${deviceId}`;
-      },
+      locateFile: (file) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}?v=${deviceId}`, // Cache único por câmera
     });
 
     pose.setOptions({
@@ -50,10 +52,10 @@ export class CamService {
       minTrackingConfidence: 0.5,
     });
 
-    pose.onResults((results) => this.handlePoseResults(deviceId, results, canvasElement));
+    pose.onResults((results) => this.handleResults(deviceId, results));
     this.poses.set(deviceId, pose);
 
-    // Iniciar a câmera do MediaPipe
+    // Iniciar processamento de frames
     const camera = new Camera(videoElement, {
       onFrame: async () => {
         await pose.send({ image: videoElement });
@@ -66,23 +68,23 @@ export class CamService {
     camera.start();
   }
 
-  private handlePoseResults(deviceId: string, results: Results, canvasElement: HTMLCanvasElement) {
-    const ctx = canvasElement.getContext('2d')!;
-    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+  private handleResults(deviceId: string, results: Results) {
+    const canvas = this.canvases.get(deviceId);
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Desenhar landmarks dos ombros
     if (results.poseLandmarks) {
-      this.drawLandmark(ctx, results.poseLandmarks[11], canvasElement); // Ombro esquerdo
-      this.drawLandmark(ctx, results.poseLandmarks[12], canvasElement); // Ombro direito
-
-      // Opcional: desenhar linha conectando os ombros
-      this.drawShoulderLine(ctx, results.poseLandmarks[11], results.poseLandmarks[12], canvasElement);
+      this.drawLandmark(ctx, results.poseLandmarks[11], canvas);  // Ombro esquerdo
+      this.drawLandmark(ctx, results.poseLandmarks[12], canvas);  // Ombro direito
+      this.drawShoulderLine(ctx, results.poseLandmarks[11], results.poseLandmarks[12], canvas);
     }
   }
 
   private drawLandmark(ctx: CanvasRenderingContext2D, landmark: any, canvas: HTMLCanvasElement) {
     if (!landmark) return;
-
     ctx.beginPath();
     ctx.arc(landmark.x * canvas.width, landmark.y * canvas.height, 5, 0, 2 * Math.PI);
     ctx.fillStyle = '#FF0000';
@@ -91,7 +93,6 @@ export class CamService {
 
   private drawShoulderLine(ctx: CanvasRenderingContext2D, start: any, end: any, canvas: HTMLCanvasElement) {
     if (!start || !end) return;
-
     ctx.beginPath();
     ctx.moveTo(start.x * canvas.width, start.y * canvas.height);
     ctx.lineTo(end.x * canvas.width, end.y * canvas.height);
@@ -100,26 +101,15 @@ export class CamService {
     ctx.stroke();
   }
 
-  stopCamera(deviceId: string): void {
-    const stream = this.streams.get(deviceId);
-    const camera = this.cameras.get(deviceId);
-    const pose = this.poses.get(deviceId);
+  stopCamera(deviceId: string) {
+    // Limpar todos os recursos
+    this.streams.get(deviceId)?.getTracks().forEach(track => track.stop());
+    this.cameras.get(deviceId)?.stop();
+    this.poses.get(deviceId)?.close();
 
-    if (stream) {
-      stream.getTracks().forEach((track) => track.stop());
-      this.streams.delete(deviceId);
-    }
-
-    if (camera) {
-      camera.stop();
-      this.cameras.delete(deviceId);
-    }
-
-    if (pose) {
-      pose.close();
-      this.poses.delete(deviceId);
-    }
-
-    this.canvasElements.delete(deviceId);
+    this.streams.delete(deviceId);
+    this.cameras.delete(deviceId);
+    this.poses.delete(deviceId);
+    this.canvases.delete(deviceId);
   }
 }

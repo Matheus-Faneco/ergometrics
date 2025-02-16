@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, ElementRef, AfterViewInit, OnDestroy} from '@angular/core';
 import {CamService} from '../../enviroments/cam.service';
 
 @Component({
@@ -6,54 +6,42 @@ import {CamService} from '../../enviroments/cam.service';
   templateUrl: './monitor.component.html',
   styleUrl: './monitor.component.css'
 })
-export class MonitorComponent implements AfterViewInit{
-  @ViewChild('video1') videoElement1!: ElementRef<HTMLVideoElement>;
-  @ViewChild('video2') videoElement2!: ElementRef<HTMLVideoElement>;
-  @ViewChild('canvas1') canvasElement1!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('canvas2') canvasElement2!: ElementRef<HTMLCanvasElement>;
+export class MonitorComponent implements AfterViewInit, OnDestroy {
+  @ViewChild('video1') video1!: ElementRef<HTMLVideoElement>;
+  @ViewChild('video2') video2!: ElementRef<HTMLVideoElement>;
+  @ViewChild('canvas1') canvas1!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('canvas2') canvas2!: ElementRef<HTMLCanvasElement>;
 
   cameras: MediaDeviceInfo[] = [];
-  selectedCamera1!: string;
-  selectedCamera2!: string;
+  selectedCameras: string[] = [];
 
-  constructor(private cameraService: CamService) {}
+  constructor(private camService: CamService) {}
 
   async ngAfterViewInit() {
-    await this.listCameras();
-    this.attachExistingStreams();
+    await this.setupCameras();
   }
 
-  private async attachExistingStreams() {
-    // Iniciar câmera 1
-    if (this.selectedCamera1) {
-      await this.cameraService.startCamera(
-        this.selectedCamera1,
-        this.videoElement1.nativeElement,
-        this.canvasElement1.nativeElement
-      );
-    }
+  private async setupCameras() {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    this.cameras = devices.filter(d => d.kind === 'videoinput');
 
-    // Iniciar câmera 2
-    if (this.selectedCamera2) {
-      await this.cameraService.startCamera(
-        this.selectedCamera2,
-        this.videoElement2.nativeElement,
-        this.canvasElement2.nativeElement
+    if (this.cameras.length >= 2) {
+      // Usar as duas primeiras câmeras
+      await this.camService.startCamera(
+        this.cameras[0].deviceId,
+        this.video1.nativeElement,
+        this.canvas1.nativeElement
+      );
+
+      await this.camService.startCamera(
+        this.cameras[1].deviceId,
+        this.video2.nativeElement,
+        this.canvas2.nativeElement
       );
     }
   }
 
-  async listCameras() {
-    try {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      this.cameras = devices.filter((device) => device.kind === 'videoinput');
-
-      if (this.cameras.length > 0) {
-        this.selectedCamera1 = this.cameras[0].deviceId;
-        this.selectedCamera2 = this.cameras[1 % this.cameras.length].deviceId;
-      }
-    } catch (error) {
-      console.error('Erro ao listar câmeras:', error);
-    }
+  ngOnDestroy() {
+    this.cameras.forEach(cam => this.camService.stopCamera(cam.deviceId));
   }
 }
