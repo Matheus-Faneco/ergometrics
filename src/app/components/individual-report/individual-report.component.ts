@@ -32,11 +32,10 @@ export class IndividualReportComponent implements OnInit {
     this.getEmployees()
   }
 
-  // get para a lista de funcionarios (barra de pesquisa)
   getEmployees() {
     this.employeeService.getEmployees().subscribe({
       next: (employees: Employee[]) => {
-        this.employees =employees;
+        this.employees = employees;
         this.employees = [...employees];
       }
     })
@@ -52,11 +51,5 @@ export class IndividualReportComponent implements OnInit {
   }
 
   loadHistoryData() {
-    this.historyData = [
-      { date: '2024-12-01', duration: 15 },
-      { date: '2024-12-01', duration: 23 },
-      { date: '2024-12-01', duration: 12 },
-      { date: '2024-12-01', duration: 2 },
-    ];
   }
 }

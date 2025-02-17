@@ -73,6 +73,29 @@
   font-size: 70px;
   font-weight: bold;
 }
+.observation-card {
+  background-color: #ffffff !important;
+}
+
+.observation-card .text {
+  color: #7B8290 !important;
+}
+
+.observation-card .content {
+  background-color: #ffffff;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.observation {
+  color: #7B8290;
+  font-size: 16px;
+  margin: 0;
+  width: 100%;
+  text-align: left;
+  white-space: pre-wrap;
+}
 
 
 .content {

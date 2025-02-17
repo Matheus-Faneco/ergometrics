@@ -1,15 +1,17 @@
-<h1 class="title">Acompanhamento</h1>
-
 <div class="container">
-  <!-- Câmera 1 -->
-  <mat-card class="camera-card">
-    <div class="camera-square">
-      <video #videoElement class="video" autoplay></video>
-      <canvas #canvasElement class="overlay"></canvas>
+  <div class="hero-section">
+    <div class="status-indicator">
+      <div class="pulse-circle"></div>
+      <mat-icon class="icon">monitor_heart</mat-icon>
     </div>
-    <button mat-flat-button color="primary" class="button" (click)="toggleCamera()">
-      {{ camService.cameraStatus ? 'Parar Monitoramento' : 'Iniciar Monitoramento' }}
-    </button>
-  </mat-card>
 
+    <h1 class="title">Monitoramento do Sistema</h1>
+
+    <p class="description">Clique para iniciar o acompanhamento de postura</p>
+
+    <button mat-fab extended color="primary" (click)="redirect()">
+      <mat-icon>play_arrow</mat-icon>
+      Começar monitoramento
+    </button>
+  </div>
 </div>
