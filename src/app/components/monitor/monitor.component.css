@@ -54,7 +54,9 @@ canvas.overlay {
   margin-top: 10px;
   width: 120px;
   text-align: center;
-  background-color: #168BF2;
+  background-color: #055FFC !important;
+  color: white !important;
+
 }
 
 .content-bottom {

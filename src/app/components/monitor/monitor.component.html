@@ -4,18 +4,12 @@
   <!-- Câmera 1 -->
   <mat-card class="camera-card">
     <div class="camera-square">
-      <video #video1 class="video" autoplay></video>
-      <canvas #canvas1 class="overlay"></canvas>
+      <video #videoElement class="video" autoplay></video>
+      <canvas #canvasElement class="overlay"></canvas>
     </div>
-
+    <button mat-flat-button color="primary" class="button" (click)="toggleCamera()">
+      {{ camService.cameraStatus ? 'Parar Monitoramento' : 'Iniciar Monitoramento' }}
+    </button>
   </mat-card>
 
-  <!-- Câmera 2 -->
-  <mat-card class="camera-card">
-    <div class="camera-square">
-      <video #video2 class="video" autoplay></video>
-      <canvas #canvas2 class="overlay"></canvas>
-    </div>
-
-  </mat-card>
 </div>
