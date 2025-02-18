@@ -110,7 +110,7 @@ export class CamerasComponent implements OnInit, OnDestroy {
         // Se houver alguma pose detectada, processa o ângulo do ombro
         if (poses.length > 0) {
           const pose = poses[0];
-          this.processShoulderAngle(pose);
+          this.processElbowAngle(pose);
         }
 
         ctx.restore();
@@ -120,10 +120,19 @@ export class CamerasComponent implements OnInit, OnDestroy {
   }
 
   private drawKeypoints(poses: poseDetection.Pose[], ctx: CanvasRenderingContext2D) {
+    // Defina os pontos de interesse
+    const keypointsOfInterest = [
+      'left_shoulder', 'right_shoulder',
+      'left_elbow', 'right_elbow',
+      'left_wrist', 'right_wrist'
+    ];
+
     for (const pose of poses) {
       for (const keypoint of pose.keypoints) {
         const score = keypoint.score ?? 0;
-        if (score > 0.3) {
+        const keypointName = keypoint.name ?? ''; // Fornece um valor padrão vazio se name for undefined
+
+        if (score > 0.3 && keypointsOfInterest.includes(keypointName)) {
           ctx.beginPath();
           // Ajusta coordenadas para câmera frontal
           const x = this.isFrontCamera ? ctx.canvas.width - keypoint.x : keypoint.x;
@@ -135,44 +144,76 @@ export class CamerasComponent implements OnInit, OnDestroy {
     }
   }
 
+
   /**
    * Processa a pose para calcular o ângulo do ombro e verificar se está correto.
    * Usa os pontos: ombro, cotovelo e quadril (lado direito neste exemplo).
    */
-  private processShoulderAngle(pose: poseDetection.Pose): void {
-    const rightShoulder = pose.keypoints.find(kp => kp.name === 'right_shoulder');
-    const rightElbow = pose.keypoints.find(kp => kp.name === 'right_elbow');
-    const rightHip = pose.keypoints.find(kp => kp.name === 'right_hip');
+  private processElbowAngle(pose: poseDetection.Pose): void {
+    const tolerance = 5; // Tolerância de ±10 graus
 
-    if (rightShoulder && rightElbow && rightHip) {
+    // Processa o lado direito
+    this.checkElbowAngle(
+      pose,
+      'right_shoulder',
+      'right_elbow',
+      'right_wrist',
+      tolerance,
+      'direito'
+    );
+
+    // Processa o lado esquerdo
+    this.checkElbowAngle(
+      pose,
+      'left_shoulder',
+      'left_elbow',
+      'left_wrist',
+      tolerance,
+      'esquerdo'
+    );
+  }
+
+  private checkElbowAngle(
+    pose: poseDetection.Pose,
+    shoulderName: string,
+    elbowName: string,
+    wristName: string,
+    tolerance: number,
+    side: string
+  ): void {
+    const shoulder = pose.keypoints.find(kp => kp.name === shoulderName);
+    const elbow = pose.keypoints.find(kp => kp.name === elbowName);
+    const wrist = pose.keypoints.find(kp => kp.name === wristName);
+
+    if (shoulder && elbow && wrist) {
       const angle = this.calculateAngle(
-        rightElbow.x, rightElbow.y,
-        rightShoulder.x, rightShoulder.y,
-        rightHip.x, rightHip.y
+        shoulder.x, shoulder.y,
+        elbow.x, elbow.y,
+        wrist.x, wrist.y
       );
 
-      // Intervalo de ângulo considerado correto (ajuste conforme necessário)
-      const isAngleCorrect = angle >= 0 && angle <= 40 || angle >= 60 ;
 
-      if (!isAngleCorrect) {
+      const isAngleIncorrect = angle < 70 || angle > 100;
+
+      if (isAngleIncorrect) {
         if (this.startIncorrectTime === null) {
           this.startIncorrectTime = Date.now();
+        } else {
+          const duration = Date.now() - this.startIncorrectTime;
+          if (duration >= 5000) { // Se o ângulo estiver incorreto por mais de 1 segundo
+            this.incorrectDuration = duration;
+            console.log(`Ângulo incorreto por: ${this.incorrectDuration} ms no lado ${side} (Ângulo: ${angle.toFixed(2)}°)`);
+            this.handleIncorrectDuration(this.incorrectDuration, angle, side);
+            this.startIncorrectTime = null; // Reinicia o contador após registrar
+          }
         }
       } else {
-        if (this.startIncorrectTime !== null) {
-          const duration = Date.now() - this.startIncorrectTime;
-          // Apenas exibe a captura se a duração for de 1s ou mais (1000 ms)
-          if (duration >= 1000) {
-            this.incorrectDuration = duration;
-            console.log(`Ângulo incorreto por: ${this.incorrectDuration} ms (Angle: ${angle.toFixed(2)}°)`);
-            this.handleIncorrectDuration(this.incorrectDuration, angle);
-          }
-          // Reseta o contador independentemente da duração
-          this.startIncorrectTime = null;
-        }
+        // Se o ângulo estiver correto, reinicia o contador
+        this.startIncorrectTime = null;
       }
     }
   }
+
   /**
    * Calcula o ângulo formado pelos pontos A, B e C, onde B é o vértice.
    * Neste caso, A: cotovelo, B: ombro e C: quadril.
@@ -202,9 +243,9 @@ export class CamerasComponent implements OnInit, OnDestroy {
    * Trata a duração registrada com ângulo incorreto.
    * Aqui você pode atualizar a interface ou enviar a informação para outro componente/serviço.
    */
-  private handleIncorrectDuration(duration: number, angle: number): void {
-    // Exemplo de log; substitua por qualquer ação necessária (ex: atualizar variável de estado, emitir evento, etc.)
-    console.log(`O ângulo ${angle.toFixed(2)}° ficou incorreto por ${duration} ms`);
+  private handleIncorrectDuration(duration: number, angle: number, side: string): void {
+    // Exemplo de log; substitua por qualquer ação necessária
+    console.log(`O ângulo no lado ${side} ficou incorreto por ${duration} ms (Ângulo: ${angle.toFixed(2)}°)`);
   }
 
   async switchCamera() {
