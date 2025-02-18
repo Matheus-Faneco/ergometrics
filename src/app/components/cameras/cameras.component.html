@@ -1,1 +1,14 @@
-<p>cameras works!</p>
+<div class="container">
+  <div *ngIf="statusMessage" class="status-overlay">
+    {{ statusMessage }}
+  </div>
+
+  <!-- Removidas dimensões fixas -->
+  <video #videoElement class="video-preview" autoplay muted playsinline></video>
+  <canvas #canvasElement class="pose-canvas"></canvas>
+
+  <!-- Botão para trocar câmera -->
+  <button class="switch-camera-button" (click)="switchCamera()">
+    Trocar Câmera
+  </button>
+</div>

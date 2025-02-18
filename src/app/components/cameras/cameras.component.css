@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.video-preview, .pose-canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.switch-camera-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
