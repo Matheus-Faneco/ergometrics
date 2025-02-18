@@ -110,7 +110,7 @@ export class CamerasComponent implements OnInit, OnDestroy {
         // Se houver alguma pose detectada, processa o ângulo do ombro
         if (poses.length > 0) {
           const pose = poses[0];
-          this.processElbowAngle(pose);
+          this.processShoulderAngle(pose);
         }
 
         ctx.restore();
@@ -139,34 +139,35 @@ export class CamerasComponent implements OnInit, OnDestroy {
    * Processa a pose para calcular o ângulo do ombro e verificar se está correto.
    * Usa os pontos: ombro, cotovelo e quadril (lado direito neste exemplo).
    */
-  private processElbowAngle(pose: poseDetection.Pose): void {
+  private processShoulderAngle(pose: poseDetection.Pose): void {
     const rightShoulder = pose.keypoints.find(kp => kp.name === 'right_shoulder');
     const rightElbow = pose.keypoints.find(kp => kp.name === 'right_elbow');
-    const rightWrist = pose.keypoints.find(kp => kp.name === 'right_wrist');
+    const rightHip = pose.keypoints.find(kp => kp.name === 'right_hip');
 
-    if (rightShoulder && rightElbow && rightWrist) {
-      // Calcula o ângulo no cotovelo: vértice é o cotovelo (right_elbow)
+    if (rightShoulder && rightElbow && rightHip) {
       const angle = this.calculateAngle(
-        rightShoulder.x, rightShoulder.y,
         rightElbow.x, rightElbow.y,
-        rightWrist.x, rightWrist.y
+        rightShoulder.x, rightShoulder.y,
+        rightHip.x, rightHip.y
       );
 
-      // Exemplo de intervalo para um ângulo considerado correto – ajuste conforme sua necessidade.
-      // Por exemplo, para uma boa flexão do cotovelo pode ser que se espere um ângulo entre 30° e 90°.
-      const isAngleCorrect = angle >= 0 && angle <= 90;
+      // Intervalo de ângulo considerado correto (ajuste conforme necessário)
+      const isAngleCorrect = angle >= 0 && angle <= 40 || angle >= 60 ;
 
       if (!isAngleCorrect) {
-        // Se o ângulo estiver incorreto, inicia ou continua a contagem do tempo
         if (this.startIncorrectTime === null) {
           this.startIncorrectTime = Date.now();
         }
       } else {
-        // Quando o ângulo volta ao normal, calcula a duração que ficou incorreto
         if (this.startIncorrectTime !== null) {
-          this.incorrectDuration = Date.now() - this.startIncorrectTime;
-          console.log(`Ângulo incorreto por: ${this.incorrectDuration} ms (Angle: ${angle.toFixed(2)}°)`);
-          this.handleIncorrectDuration(this.incorrectDuration, angle);
+          const duration = Date.now() - this.startIncorrectTime;
+          // Apenas exibe a captura se a duração for de 1s ou mais (1000 ms)
+          if (duration >= 1000) {
+            this.incorrectDuration = duration;
+            console.log(`Ângulo incorreto por: ${this.incorrectDuration} ms (Angle: ${angle.toFixed(2)}°)`);
+            this.handleIncorrectDuration(this.incorrectDuration, angle);
+          }
+          // Reseta o contador independentemente da duração
           this.startIncorrectTime = null;
         }
       }
