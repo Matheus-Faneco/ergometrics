@@ -16,7 +16,6 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { UserManualComponent } from './components/user-manual/user-manual.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { UserPerfilComponent } from './components/user-perfil/user-perfil.component';
-import { AddEmployeeComponent } from './components/components/add-employee/add-employee.component';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -64,7 +63,6 @@ import { SearchEmployeeComponent } from './components/search-employee/search-emp
     UserManualComponent,
     ChartComponent,
     UserPerfilComponent,
-    AddEmployeeComponent,
     EmployeeAddComponent,
     CamerasComponent,
     SearchEmployeeComponent
