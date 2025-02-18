@@ -23,7 +23,7 @@ const routes: Routes = [
         component: SearchEmployeeComponent
       },
       {
-        path: 'relatorio-individual',
+        path: 'relatorio-individual/:id',
         component: IndividualReportComponent
       },
       {

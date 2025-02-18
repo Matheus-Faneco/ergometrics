@@ -32,4 +32,12 @@ export class SearchEmployeeComponent implements OnInit {
     )
   }
 
+  getEmployeeIdByName(employeeName: string){
+    this.employeeService.getEmployees().subscribe(
+      (employees: Employee[]) => {
+        const employee = employees.find(employee => employee.nome === employeeName);
+      }
+    )
+  }
+
 }

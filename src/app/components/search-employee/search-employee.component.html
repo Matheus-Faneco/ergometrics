@@ -20,7 +20,7 @@
   <div class="body">
     <div class="card-container">
       @for (filteredEmployee of filteredEmployeeList; track filteredEmployee.nome){
-        <mat-card class="employee-card" routerLink="/home/relatorio-individual">
+        <mat-card class="employee-card" [routerLink]="['/home/relatorio-individual', filteredEmployee.id]">
           <mat-card-content>
             <h3>{{ filteredEmployee.nome }}</h3>
             <p>{{ filteredEmployee.cargo }}</p>
