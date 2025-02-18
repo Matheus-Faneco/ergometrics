@@ -1,0 +1,33 @@
+<div class="header">
+  <h1 class="title">Pesquise o funcionário</h1>
+
+  <div class="search-container">
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="searchText"
+      placeholder="Digite o nome"
+      class="search-input"
+    >
+
+    <p-button
+      label="Confirmar"
+      (onClick)="filterEmployee()"
+      styleClass="confirm-button"
+    />
+  </div>
+
+  <div class="body">
+    <div class="card-container">
+      @for (filteredEmployee of filteredEmployeeList; track filteredEmployee.nome){
+        <mat-card class="employee-card" routerLink="/home/relatorio-individual">
+          <mat-card-content>
+            <h3>{{ filteredEmployee.nome }}</h3>
+            <p>{{ filteredEmployee.cargo }}</p>
+            <p>{{ filteredEmployee.matricula }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </div>
+</div>

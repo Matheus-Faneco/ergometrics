@@ -48,6 +48,7 @@ import {MatInput} from '@angular/material/input';
 import {CardModule} from 'primeng/card';
 import {WebcamModule} from 'ngx-webcam';
 import { CamerasComponent } from './components/cameras/cameras.component';
+import { SearchEmployeeComponent } from './components/search-employee/search-employee.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { CamerasComponent } from './components/cameras/cameras.component';
     UserPerfilComponent,
     AddEmployeeComponent,
     EmployeeAddComponent,
-    CamerasComponent
+    CamerasComponent,
+    SearchEmployeeComponent
   ],
   imports: [
     // Angular

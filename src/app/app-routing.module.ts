@@ -11,12 +11,17 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {UserPerfilComponent} from './components/user-perfil/user-perfil.component';
 import {EmployeeAddComponent} from './components/employee-add/employee-add.component';
 import {CamerasComponent} from './components/cameras/cameras.component';
+import {SearchEmployeeComponent} from './components/search-employee/search-employee.component';
 
 const routes: Routes = [
   { path: 'home', component: SidebarComponent, children: [
       {
         path: 'acompanhamento',
         component: MonitorComponent
+      },
+      {
+        path: 'lista-funcionarios',
+        component: SearchEmployeeComponent
       },
       {
         path: 'relatorio-individual',

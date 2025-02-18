@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EmployeeService} from '../../core/services/employee.service';
 import {Employee} from '../../core/models/employee';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-individual-report',
@@ -39,6 +40,11 @@ export class IndividualReportComponent implements OnInit {
         this.employees = [...employees];
       }
     })
+  }
+
+  getEmployeeByName(name: string){
+    if (this.selectedUser === Employee.name){}
+
   }
 
 

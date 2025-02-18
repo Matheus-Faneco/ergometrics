@@ -1,15 +1,5 @@
 <div class="header">
   <h1 class="title">Relatório individual</h1>
-
-  <p-autoComplete [(ngModel)]="selectedUser"
-                  [suggestions]="filteredEmployee"
-                  (completeMethod)="filterUsers($event)"
-                  placeholder="Pesquisar funcionário"
-                  field="nome">
-  </p-autoComplete>
-  <p-button
-    label="Confirmar"
-  />
 </div>
 
 <div class="container">
