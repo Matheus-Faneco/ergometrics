@@ -10,6 +10,7 @@ import {UserManualComponent} from './components/user-manual/user-manual.componen
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {UserPerfilComponent} from './components/user-perfil/user-perfil.component';
 import {EmployeeAddComponent} from './components/employee-add/employee-add.component';
+import {CamerasComponent} from './components/cameras/cameras.component';
 
 const routes: Routes = [
   { path: 'home', component: SidebarComponent, children: [
@@ -43,8 +44,8 @@ const routes: Routes = [
       },
     ] },
   { path: 'login', component: LoginComponent },
-  { path: 'recovery', component: ForgotPasswordComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'cameras', component: CamerasComponent }
 ];
 
 @NgModule({

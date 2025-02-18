@@ -10,7 +10,6 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { HomeComponent } from './components/home/home.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MonitorComponent } from './components/monitor/monitor.component';
-import { ReportComponent } from './components/report/report.component';
 import { IndividualReportComponent } from './components/individual-report/individual-report.component';
 import { GeneralReportComponent } from './components/general-report/general-report.component';
 import { RegistrationComponent } from './components/registration/registration.component';
@@ -30,7 +29,7 @@ import { ChartModule } from 'primeng/chart';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardModule } from '@angular/material/card';
 import {
   MatCell, MatCellDef,
@@ -47,6 +46,8 @@ import { EmployeeAddComponent } from './components/employee-add/employee-add.com
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {CardModule} from 'primeng/card';
+import {WebcamModule} from 'ngx-webcam';
+import { CamerasComponent } from './components/cameras/cameras.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,6 @@ import {CardModule} from 'primeng/card';
     HomeComponent,
     SidebarComponent,
     MonitorComponent,
-    ReportComponent,
     IndividualReportComponent,
     GeneralReportComponent,
     RegistrationComponent,
@@ -64,7 +64,8 @@ import {CardModule} from 'primeng/card';
     ChartComponent,
     UserPerfilComponent,
     AddEmployeeComponent,
-    EmployeeAddComponent
+    EmployeeAddComponent,
+    CamerasComponent
   ],
   imports: [
     // Angular
@@ -72,6 +73,7 @@ import {CardModule} from 'primeng/card';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    WebcamModule,
 
     // PrimeNG
     PasswordModule,
@@ -104,7 +106,8 @@ import {CardModule} from 'primeng/card';
     MatPaginator,
     MatFormField,
     MatInput,
-    CardModule
+    CardModule,
+    MatFabButton
   ],
   providers: [
     provideAnimationsAsync('noop')

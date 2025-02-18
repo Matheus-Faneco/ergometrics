@@ -7,19 +7,19 @@ import {Employee} from '../models/employee';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private apiUrl = 'http://127.0.0.1:8000/api/funcionarios/';
+  private apiUrlEmployee = 'http://127.0.0.1:8000/api/funcionarios/';
 
   constructor(private http: HttpClient) {}
 
   getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl);
+    return this.http.get<Employee[]>(this.apiUrlEmployee);
   }
 
   addEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.apiUrl, employee);
+    return this.http.post<Employee>(this.apiUrlEmployee, employee);
   }
 
   deleteEmployee(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}${id}/`);
+    return this.http.delete<void>(`${this.apiUrlEmployee}${id}/`);
   }
 }
