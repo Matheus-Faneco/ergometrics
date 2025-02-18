@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EmployeeService} from '../../core/services/employee.service';
 import {Employee} from '../../core/models/employee';
-import {Observable} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-individual-report',
@@ -9,40 +9,31 @@ import {Observable} from 'rxjs';
   styleUrl: './individual-report.component.css'
 })
 export class IndividualReportComponent implements OnInit {
+  employee: Employee = new Employee();
+  employeeId: number | undefined;
 
-  constructor(private employeeService: EmployeeService) { }
-
-  alertNumber: number = 0;
-  totalTimeBadPosture: number = 0;
-  historyData: Array<{ date: string; duration: number }> = [];
-  employees: Employee[] = [];
-
+  constructor(
+    private route: ActivatedRoute,
+    private employeeService: EmployeeService
+  ) { }
 
   ngOnInit() {
-    this.getAlertNumber()
-    this.getTotalTimeBadPosture()
-    this.loadHistoryData()
-    this.getEmployees()
+    this.getFuncionarioPeloId()
   }
 
-  getEmployees() {
-    this.employeeService.getEmployees().subscribe({
-      next: (employees: Employee[]) => {
-        this.employees = employees;
-        this.employees = [...employees];
+  getFuncionarioPeloId(){
+    const idFuncionario = this.route.snapshot.paramMap.get('id');
+    if (idFuncionario){
+      this.employeeId = +idFuncionario; // convertendo o id na url em numero
+    }
+    this.buscarFuncionario(this.employeeId!);
+  }
+  buscarFuncionario(id: number){
+    this.employeeService.getEmployeeId(id).subscribe(
+      (employee: Employee) => {
+        this.employee = employee;
       }
-    })
+    )
   }
 
-
-  getAlertNumber(): number {
-    return this.alertNumber;
-  }
-
-  getTotalTimeBadPosture(): number {
-    return this.totalTimeBadPosture;
-  }
-
-  loadHistoryData() {
-  }
 }

@@ -1,111 +1,78 @@
 .title {
-  color: #7B8290;
+  color: #2c3e50;
+  font-size: 24px;
 }
+
 .header {
   display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 30px;
 }
 
-.title {
+.employee {
+  color: #7f8c8d;
+  font-weight: 400;
   margin: 0;
 }
-
 
 .container {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  padding: 40px;
+  gap: 30px;
+  padding: 20px;
 }
 
 .top-section,
 .bottom-section {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 400px;
-  height: 250px;
-  border-radius: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  background-color: #168BF2;
-  position: relative;
+  flex: 1;
+  min-width: 300px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #3498db;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .card-bottom {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-top: 90px;
-  width: 500px;
-  height: 380px;
-  border-radius: 20px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  background-color: #ffffff;
-  position: relative;
+  flex: 1;
+  min-width: 400px;
+  padding: 20px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.text, .text-bottom {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: bold;
+.text {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 15px;
+  display: block;
 }
 
 .text-bottom {
-  color: #7B8290;
+  color: #2c3e50;
+  font-size: 16px;
+  margin-bottom: 15px;
+  display: block;
 }
 
-.current-posture, .alert-number, .time-bad-posture {
-  margin-bottom: 20px;
-  color: #ffffff;
-  font-size: 70px;
+.alert-number,
+.time-bad-posture {
+  color: white;
+  font-size: 48px;
   font-weight: bold;
-}
-.observation-card {
-  background-color: #ffffff !important;
-}
-
-.observation-card .text {
-  color: #7B8290 !important;
-}
-
-.observation-card .content {
-  background-color: #ffffff;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 20px;
+  margin: 20px 0;
+  text-align: center;
 }
 
 .observation {
-  color: #7B8290;
-  font-size: 16px;
-  margin: 0;
-  width: 100%;
-  text-align: left;
-  white-space: pre-wrap;
-}
-
-
-.content {
-  margin-top: 50px;
-  width: 100%;
-  height: calc(100% - 60px);
-  background-color: #168BF2;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #333;
+  color: #7f8c8d;
+  font-size: 14px;
+  line-height: 1.5;
 }
