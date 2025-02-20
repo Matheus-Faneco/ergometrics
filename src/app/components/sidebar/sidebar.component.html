@@ -64,16 +64,19 @@
               <span class="text-guide">Manual do usuário</span>
             </button>
           </li>
-
+          <li>
+            <button (click)="logout()" routerLink="/login" class="menu-button">
+              <i class="icon material-icons">logout</i>
+              <span class="text-guide">Sair</span>
+            </button>
+          </li>
         </ul>
       </div>
-    </div>
-    <span class="text" (click)="logout()" routerLink="/login">Sair</span>
-  </div>
+</div>
+</div>
 </div>
 
 <!--CONTEÚDO PRINCIPAL DAS PÁGINAS-->
 <div class="main-content">
   <router-outlet/>
 </div>
-
