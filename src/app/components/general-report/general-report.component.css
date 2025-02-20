@@ -47,8 +47,7 @@
   display: block;
 }
 
-.total-alerts,
-.average-time {
+.total-alerts{
   color: white;
   font-size: 48px;
   font-weight: bold;
@@ -56,15 +55,29 @@
   text-align: center;
 }
 
-.observation {
-  color: #ecf0f1;
-  font-size: 14px;
-  line-height: 1.5;
-  padding: 10px;
+.average-time {
+  color: #055FFC;
+  font-size: 64px;
+  font-weight: bold;
+  margin: 20px 0;
+  text-align: center;
+}
+
+
+.porcentagem {
+  color: #fff;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 20px 0;
+  text-align: center;
 }
 
 .content-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
+  text-align: center;
 }
 
 .content-bottom canvas {

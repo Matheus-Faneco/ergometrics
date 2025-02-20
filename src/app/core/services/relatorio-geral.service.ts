@@ -12,8 +12,9 @@ export class RelatorioGeralService {
 
   constructor(private http: HttpClient) { }
 
-  getRelatorioGeral(): Observable<RelatorioGeral> {
-    return this.http.get<RelatorioGeral>(this.apiUrlRelatorioGeral);
+  getRelatorioGeral(): Observable<RelatorioGeral[]> {
+    return this.http.get<RelatorioGeral[]>(this.apiUrlRelatorioGeral);
   }
+
 
 }
