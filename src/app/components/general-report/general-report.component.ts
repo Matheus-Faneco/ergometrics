@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {RelatorioGeralService} from '../../core/services/relatorio-geral.service';
+import {RelatorioGeral} from '../../core/models/relatorio-geral';
 
 @Component({
   selector: 'app-general-report',
@@ -6,32 +8,20 @@ import {Component, OnInit} from '@angular/core';
   styleUrl: './general-report.component.css'
 })
 export class GeneralReportComponent implements OnInit{
-  totalAlertsGeneral: number = 0;
-  averageTime: number = 0;
+  relatorioGeral: RelatorioGeral = new RelatorioGeral();
+
+  constructor(private relatorioGeralService: RelatorioGeralService) { }
 
 
   ngOnInit() {
-    this.getTotalAlertsGeneral()
-    this.getAverageTime()
+    this.getRelatorioGeral()
   }
 
-  getTotalAlertsGeneral (): number {
-    return this.totalAlertsGeneral;
+  getRelatorioGeral(){
+    this.relatorioGeralService.getRelatorioGeral().subscribe({
+      next: (data) => {
+        this.relatorioGeral = data;
+      }
+    })
   }
-
-  getAverageTime(): number{
-    return this.averageTime;
-  }
-
-  openSubMenu: string | null = null;
-
-
-  toggleSubMenu(subMenuName: string) {
-    if (this.openSubMenu === subMenuName) {
-      this.openSubMenu = null;
-    } else {
-      this.openSubMenu = subMenuName;
-    }
-  }
-
 }

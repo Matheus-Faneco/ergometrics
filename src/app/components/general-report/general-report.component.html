@@ -7,15 +7,15 @@
     <mat-card class="card">
       <span class="text">Total de alertas</span>
       <div class="content">
-        <p class="total-alerts">{{ getTotalAlertsGeneral() }}</p>
+        <p class="total-alerts">{{ relatorioGeral.total_alertas }}</p>
       </div>
     </mat-card>
 
-    <!-- OBSERVAÇÕES -->
+    <!-- PORCENTAGEM DE ALERTA POR FUNCIONÁRIO -->
     <mat-card class="card">
-      <span class="text">Porcentagem por postura incorreta</span>
+      <span class="text">Porcentagem de alerta por funcionário</span>
       <div class="content">
-        <p class="observation">teste</p>
+        <p class="observation">{{ relatorioGeral.porcentagem_funcionario }}%</p>
       </div>
     </mat-card>
   </div>
@@ -23,11 +23,11 @@
 
   <!-- Seção Inferior -->
   <div class="bottom-section">
-    <!-- MÉDIA GERAL -->
+    <!-- MÉDIA DE ALERTA POR FUNCIONÁRIO -->
     <mat-card class="card-bottom">
-      <span class="text-bottom">Média geral de segundos</span>
+      <span class="text-bottom">Média de alerta por funcionário</span>
       <div class="content-bottom">
-        <p class="average-time">{{ getAverageTime() }}</p>
+        <p class="average-time">{{ relatorioGeral.media_alerta_por_funcionario }}</p>
       </div>
     </mat-card>
 

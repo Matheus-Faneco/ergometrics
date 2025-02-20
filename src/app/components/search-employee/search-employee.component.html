@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" xmlns="http://www.w3.org/1999/html">
   <h1 class="title">Pesquise o funcionário</h1>
 
   <div class="search-container">
@@ -10,11 +10,8 @@
       class="search-input"
     >
 
-    <p-button
-      label="Confirmar"
-      (onClick)="filterEmployee()"
-      class="confirm-button"
-    />
+    <button mat-flat-button class="confirm-button" (click)="filterEmployee()">Pesquisar</button>
+
   </div>
 
   <div class="body">

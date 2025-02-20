@@ -1,5 +1,6 @@
 export class RelatorioGeral {
-  total_alertas: number = 0;
-  media_alerta_por_funcionario: number = 0;
-  porcentagem_funcionario: number = 0;
+  id!: number;
+  total_alertas: number = 3;
+  media_alerta_por_funcionario: number = 4;
+  porcentagem_funcionario: number = 5;
 }
