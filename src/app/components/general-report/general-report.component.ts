@@ -20,7 +20,7 @@ export class GeneralReportComponent implements OnInit{
   getRelatorioGeral(){
     this.relatorioGeralService.getRelatorioGeral().subscribe({
       next: (data) => {
-        this.relatorioGeral = data[0];
+        this.relatorioGeral = data[0]; //sempre irá pegar o relatorio_geral com id = 1
       }
     })
   }
