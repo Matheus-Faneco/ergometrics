@@ -6,10 +6,9 @@
 }
 
 
-button {
+.add {
   background-color: #055FFC!important;
   margin-bottom: 20px;
-
 }
 
 table {
@@ -17,9 +16,7 @@ table {
 
 }
 
-.bar{
-  paddin: 20px;
-}
+
 mat-paginator {
   margin-top: 20px;
 }

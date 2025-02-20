@@ -11,6 +11,7 @@
         mat-raised-button
         color="primary"
         routerLink="/home/adicionar-funcionario"
+        class="add"
 
       >
         <mat-icon>add</mat-icon>
@@ -19,7 +20,7 @@
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <!-- Nome Column -->
-        <ng-container matColumnDef="name" class="bar">
+        <ng-container matColumnDef="name" >
           <th mat-header-cell *matHeaderCellDef> Nome </th>
           <td mat-cell *matCellDef="let employee"> {{employee.nome}} </td>
         </ng-container>
