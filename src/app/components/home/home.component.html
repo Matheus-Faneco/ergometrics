@@ -1,0 +1,39 @@
+<!-- welcome.component.html -->
+<div class="welcome-page">
+  <div class="content">
+    <h1>Bem-vindo</h1>
+
+    <div class="main-card">
+      <div class="text-section">
+        <p class="intro-text">
+          Comece a monitorar sua postura de forma simples e eficiente
+        </p>
+
+        <div class="features">
+          <div class="feature-item">
+            <mat-icon>show_chart</mat-icon>
+            <span>Relatórios de postura</span>
+          </div>
+
+          <div class="feature-item">
+            <mat-icon>notifications</mat-icon>
+            <span>Observações de postura</span>
+          </div>
+
+          <div class="feature-item">
+            <mat-icon>accessibility</mat-icon>
+            <span>Acompanhamento postural</span>
+          </div>
+        </div>
+      </div>
+
+      <button mat-stroked-button
+              color="primary"
+              class="start-button"
+              routerLink="/dashboard">
+        Iniciar agora
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

@@ -5,5 +5,5 @@ export class Employee {
   cargo!: string;
   observacoes!: string;
   total_alertas!: number;
-  duracao!: number;
+  duracao_segundos!: number;
 }

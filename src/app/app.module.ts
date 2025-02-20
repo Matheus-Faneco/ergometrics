@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { HomeComponent } from './components/home/home.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MonitorComponent } from './components/monitor/monitor.component';
@@ -15,7 +14,6 @@ import { GeneralReportComponent } from './components/general-report/general-repo
 import { RegistrationComponent } from './components/registration/registration.component';
 import { UserManualComponent } from './components/user-manual/user-manual.component';
 import { ChartComponent } from './components/chart/chart.component';
-import { UserPerfilComponent } from './components/user-perfil/user-perfil.component';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -53,7 +51,6 @@ import { SearchEmployeeComponent } from './components/search-employee/search-emp
   declarations: [
     AppComponent,
     LoginComponent,
-    ForgotPasswordComponent,
     HomeComponent,
     SidebarComponent,
     MonitorComponent,
@@ -62,7 +59,6 @@ import { SearchEmployeeComponent } from './components/search-employee/search-emp
     RegistrationComponent,
     UserManualComponent,
     ChartComponent,
-    UserPerfilComponent,
     EmployeeAddComponent,
     CamerasComponent,
     SearchEmployeeComponent

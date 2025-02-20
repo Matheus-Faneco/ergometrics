@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-cameras',
@@ -11,6 +12,13 @@ export class CamerasComponent implements OnInit, OnDestroy {
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
 
+  constructor(private http: HttpClient) {
+  }
+
+  //matricula do funcionario para atribuiçao
+  matriculaFuncionario: string = ""
+
+  // camera e modelo do tensorflow
   detector?: poseDetection.PoseDetector;
   isDetecting = false;
   statusMessage = 'Inicializando...';
@@ -19,6 +27,30 @@ export class CamerasComponent implements OnInit, OnDestroy {
   // Variáveis para controlar o tempo em que o ângulo está incorreto
   private startIncorrectTime: number | null = null;
   public incorrectDuration: number = 0;
+
+  atribuirFuncionario() {
+    if (!this.matriculaFuncionario) {
+      alert('Digite a matrícula do funcionário!');
+      return;
+    }
+
+    // Faz a requisição POST
+    this.http.post(
+      'http://localhost:8000/api/camera/atribuir-funcionario/',
+      { matricula: this.matriculaFuncionario },
+      { headers: { 'Content-Type': 'application/json' } }
+    ).subscribe({
+      next: () => {
+        alert('Funcionário atribuído com sucesso!');
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Erro ao atribuir funcionário!');
+      }
+    });
+  }
+
+
 
   async ngOnInit() {
     try {
@@ -248,22 +280,28 @@ export class CamerasComponent implements OnInit, OnDestroy {
     console.log(`O ângulo no lado ${side} ficou incorreto por ${duration} ms (Ângulo: ${angle.toFixed(2)}°)`);
   }
 
-  async switchCamera() {
-    this.isDetecting = false;
-    this.isFrontCamera = !this.isFrontCamera;
 
-    if (this.videoElement?.nativeElement.srcObject) {
-      const stream = this.videoElement.nativeElement.srcObject as MediaStream;
-      stream.getTracks().forEach(track => track.stop());
-    }
+  //----------------FUNÇÃO DE TROCAR CAMERA------------------------
+  //---------------------------------------------------------------
+  // async switchCamera() {
+  //   this.isDetecting = false;
+  //   this.isFrontCamera = !this.isFrontCamera;
+  //
+  //   if (this.videoElement?.nativeElement.srcObject) {
+  //     const stream = this.videoElement.nativeElement.srcObject as MediaStream;
+  //     stream.getTracks().forEach(track => track.stop());
+  //   }
+  //
+  //   try {
+  //     await this.startCamera();
+  //     this.startDetection();
+  //   } catch (error) {
+  //     this.handleError(error);
+  //   }
+  // }
+  //---------------------------------------------------------------
+  //---------------------------------------------------------------
 
-    try {
-      await this.startCamera();
-      this.startDetection();
-    } catch (error) {
-      this.handleError(error);
-    }
-  }
 
   private handleError(error: unknown) {
     this.statusMessage = `Erro: ${this.getErrorMessage(error)}`;

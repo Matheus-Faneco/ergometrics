@@ -7,13 +7,17 @@ import {GeneralReportComponent} from './components/general-report/general-report
 import {RegistrationComponent} from './components/registration/registration.component';
 import {UserManualComponent} from './components/user-manual/user-manual.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
-import {UserPerfilComponent} from './components/user-perfil/user-perfil.component';
 import {EmployeeAddComponent} from './components/employee-add/employee-add.component';
 import {CamerasComponent} from './components/cameras/cameras.component';
 import {SearchEmployeeComponent} from './components/search-employee/search-employee.component';
+import {HomeComponent} from './components/home/home.component';
 
 const routes: Routes = [
   { path: 'home', component: SidebarComponent, children: [
+      {
+        path: '',
+        component: HomeComponent,
+      },
       {
         path: 'acompanhamento',
         component: MonitorComponent
@@ -41,10 +45,6 @@ const routes: Routes = [
       {
         path: 'manual',
         component: UserManualComponent
-      },
-      {
-        path: 'perfil',
-        component: UserPerfilComponent
       },
     ] },
   { path: 'login', component: LoginComponent },
