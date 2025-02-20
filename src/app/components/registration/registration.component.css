@@ -5,8 +5,11 @@
   padding: 20px;
 }
 
-.add-button {
+
+button {
+  background-color: #055FFC;
   margin-bottom: 20px;
+  color: #055FFC;
 }
 
 table {
