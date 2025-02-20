@@ -1,10 +1,6 @@
-.title {
-  color: #7B8290;
-}
 .container {
   padding: 20px;
 }
-
 
 .add {
   background-color: #055FFC!important;
@@ -13,9 +9,7 @@
 
 table {
   width: 100%;
-
 }
-
 
 mat-paginator {
   margin-top: 20px;

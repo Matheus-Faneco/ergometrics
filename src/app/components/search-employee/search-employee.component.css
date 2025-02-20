@@ -8,10 +8,14 @@
 .search-input {
   flex-grow: 1;
   width: 100%;
+  padding: 1rem;
 }
 
 .confirm-button {
   margin-left: 8px;
+  background: #055FFC;
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 .card-container {
