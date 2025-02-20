@@ -5,12 +5,23 @@
   margin: 20px auto;
   overflow: hidden;
 }
+.status-overlay{
+  padding-bottom: 1rem;
+}
+
+.search-input{
+  padding: 0.5rem;
+}
+
+.btn-c {
+  padding: 1rem;
+
+}
 
 .video-preview {
   width: 100%;
   height: auto;
   border-radius: 8px;
-
 }
 .pose-canvas{
   border-radius: 8px;
@@ -22,15 +33,3 @@
 
 }
 
-.switch-camera-button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  z-index: 10;
-  padding: 10px 20px;
-  background: rgba(0,0,0,0.7);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
