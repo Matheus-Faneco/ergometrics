@@ -19,7 +19,7 @@
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <!-- Nome Column -->
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="name" class="bar">
           <th mat-header-cell *matHeaderCellDef> Nome </th>
           <td mat-cell *matCellDef="let employee"> {{employee.nome}} </td>
         </ng-container>
@@ -42,7 +42,7 @@
           <td mat-cell *matCellDef="let employee">
             <button
               mat-icon-button
-              color="warn"
+              color="primary"
               (click)="deleteEmployee(employee.id)"
             >
               <mat-icon>delete</mat-icon>

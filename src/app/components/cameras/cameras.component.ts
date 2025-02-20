@@ -29,10 +29,10 @@ export class CamerasComponent implements OnInit, OnDestroy {
   public incorrectDuration: number = 0;
 
   atribuirFuncionario() {
-    // if (!this.matriculaFuncionario) {
-    //   alert('Digite a matrícula do funcionário!');
-    //   return;
-    // }
+    if (!this.matriculaFuncionario) {
+      alert('Digite a matrícula do funcionário!');
+      return;
+    }
 
     // Faz a requisição POST
     this.http.post(
