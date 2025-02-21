@@ -16,7 +16,7 @@ export class CamerasComponent implements OnInit, OnDestroy {
   }
 
   //matricula do funcionario para atribuiçao
-  matriculaFuncionario: string = ""
+  matriculaFuncionario: string = "";
 
   // camera e modelo do tensorflow
   detector?: poseDetection.PoseDetector;

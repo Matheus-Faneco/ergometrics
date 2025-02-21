@@ -1,22 +1,31 @@
-.container {
+.container-camera {
   position: relative;
   width: 100%;
   max-width: 640px;
   margin: 20px auto;
-  overflow: hidden;
+}
+
+.container1{
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin: 20px auto;
+  overflow: visible;
 }
 .status-overlay{
   padding-bottom: 1rem;
 }
 
 .search-input{
-  padding: 0.5rem;
+  padding: 0.5rem !important;
+  width: 300px !important;
 }
 
 button {
   background-color: #055FFC !important;
+  color: white !important;
   margin-left: 20px  !important;
-  border-radius: 6px;
+  border-radius: 6px !important;
 }
 
 .video-preview {
