@@ -1,8 +1,9 @@
 .welcome-page {
   display: flex;
-  min-height: 100vh;
+  height: 95vh;
   padding: 20px;
   background: #f8f9fa;
+  border-radius: 10px;
 }
 
 .content {

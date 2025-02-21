@@ -12,9 +12,11 @@
 }
 
 .confirm-button {
-  margin-left: 8px;
-  padding: 1rem;
-  border-radius: 8px;
+  margin-left: 8px !important;
+  padding: 1.5rem !important;
+  border-radius: 8px !important;
+  background-color: #055FFC !important;
+  color: white !important;
 }
 
 .card-container {

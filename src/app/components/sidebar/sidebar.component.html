@@ -32,20 +32,22 @@
             </button>
 
             <!-- RELATÓRIO INDIVIDUAL -->
-            <ul class="sub-menu"  *ngIf="openSubMenu === 'relatorio'">
-              <li>
-                <button routerLink="/home/lista-funcionarios" class="menu-button">
-                  <span class="text">Relatório individual</span>
-                </button>
-              </li>
+            @if (openSubMenu === 'relatorio') {
+              <ul class="sub-menu"  >
+                <li>
+                  <button routerLink="/home/lista-funcionarios" class="menu-button">
+                    <span class="text">Relatório individual</span>
+                  </button>
+                </li>
 
-              <!-- RELATÓRIO GERAL -->
-              <li>
-                <button routerLink="/home/relatorio-geral" class="menu-button">
-                  <span class="text">Relatório geral</span>
-                </button>
-              </li>
-            </ul>
+                <!-- RELATÓRIO GERAL -->
+                <li>
+                  <button routerLink="/home/relatorio-geral" class="menu-button">
+                    <span class="text">Relatório geral</span>
+                  </button>
+                </li>
+              </ul>
+            }
 
           </li>
 

@@ -2,16 +2,8 @@
   <h1 class="title">Pesquise o funcionário</h1>
 
   <div class="search-container">
-    <input
-      type="text"
-      pInputText
-      [(ngModel)]="searchText"
-      placeholder="Digite o nome"
-      class="search-input"
-    >
-
+    <input type="text" pInputText [(ngModel)]="searchText" placeholder="Digite o nome" class="search-input">
     <button mat-flat-button class="confirm-button" (click)="filterEmployee()">Pesquisar</button>
-
   </div>
 
   <div class="body">
