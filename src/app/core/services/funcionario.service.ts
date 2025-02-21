@@ -25,4 +25,8 @@ export class FuncionarioService {
   deletarFucionario(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrlFuncionario}${id}/`);
   }
+
+  updateTotalAlertas(id: number, totalAlertas: number) {
+    return this.http.patch(`${this.apiUrlFuncionario}${id}/`, { total_alertas: totalAlertas });
+  }
 }

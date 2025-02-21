@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {FuncionarioService} from '../../core/services/funcionario.service';
 
 @Component({
   selector: 'app-cameras',
@@ -12,7 +13,7 @@ export class CamerasComponent implements OnInit, OnDestroy {
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private http: HttpClient) {
+  constructor(private funcionarioService: FuncionarioService, private http: HttpClient) {
   }
 
   //matricula do funcionario para atribuiçao
@@ -24,6 +25,20 @@ export class CamerasComponent implements OnInit, OnDestroy {
   mensagemDeStatus = 'Inicializando...';
   private cameraFrontal = false;
 
+  incrementarAlerta(id: number) {
+    this.funcionarioService.getIdFuncionario(id).subscribe((funcionario) => {
+      if (funcionario) {
+        const novoTotal = funcionario.total_alertas + 1;
+
+        this.funcionarioService.updateTotalAlertas(id, novoTotal).subscribe(() => {
+          funcionario.total_alertas = novoTotal;
+          console.log(`Total de alertas atualizado para o funcionário ${id}: ${novoTotal}`);
+        });
+      }
+    });
+  }
+
+
 
   // Variável para contar os alertas
   private alertaCount: number = 0;
@@ -32,14 +47,13 @@ export class CamerasComponent implements OnInit, OnDestroy {
   private iniciarTempoIncorreto: number | null = null;
   public duracaoIncorreta: number = 0;
 
-  // Faz a atribuição de Funcionario
   atribuirFuncionario() {
     if (!this.matriculaFuncionario) {
       alert('Digite a matrícula do funcionário!');
       return;
     }
 
-    // Faz a requisição POST
+    // Requisição POST para atribuir o funcionário
     this.http.post(
       'http://localhost:8000/api/camera/atribuir-funcionario/',
       { matricula: this.matriculaFuncionario },
@@ -47,10 +61,33 @@ export class CamerasComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: () => {
         alert('Funcionário atribuído com sucesso!');
+
+        // Se a duração incorreta for diferente de 0, atualiza o funcionário
+        if (this.duracaoIncorreta !== 0) {
+          // Dados a serem atualizados (exemplo)
+          const dadosAtualizados = { duracao: this.duracaoIncorreta };
+
+          // Cabeçalhos para a requisição PUT
+          const headers = { 'Content-Type': 'application/json' };
+
+          this.http.put<any>(
+            `http://localhost:8000/api/funcionarios/${1}/`,
+            dadosAtualizados,
+            { headers: headers }
+          ).subscribe({
+            next: (response) => {
+              console.log('Funcionário atualizado com sucesso!', response);
+            },
+            error: (err) => {
+              console.error('Erro ao atualizar funcionário:', err);
+              alert('Erro ao atualizar funcionário');
+            }
+          });
+        }
       },
       error: (err) => {
-        console.error(err);
-        alert('Erro ao atribuir funcionário!');
+        console.error('Erro ao atribuir funcionário:', err);
+        alert('Erro ao atribuir funcionário');
       }
     });
   }
