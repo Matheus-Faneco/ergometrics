@@ -13,7 +13,8 @@ export class AdicionarFuncionarioComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private FuncionarioService: FuncionarioService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.inicializarFormulario();
@@ -22,7 +23,7 @@ export class AdicionarFuncionarioComponent implements OnInit {
   private inicializarFormulario(): void {
     this.formularioFuncionario = this.fb.group({
       nome: ['', Validators.required],
-      matricula: ['', [Validators.required]],
+      matricula: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
       cargo: ['', Validators.required]
     });
   }
@@ -30,6 +31,7 @@ export class AdicionarFuncionarioComponent implements OnInit {
   onSubmit(): void {
     if (this.formularioFuncionario.valid) {
       const employeeData = this.formularioFuncionario.value;
+      console.log('Dados do formulário:', employeeData); // Verifique o payload
       this.FuncionarioService.adicionarFuncionario(employeeData).subscribe({
         next: (response) => {
           console.log('Funcionário adicionado com sucesso:', response);

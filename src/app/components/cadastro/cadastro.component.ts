@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {FuncionarioService} from '../../core/services/funcionario.service';
@@ -9,36 +9,45 @@ import {Employee} from '../../core/models/employee';
   templateUrl: './cadastro.component.html',
   styleUrl: './cadastro.component.css'
 })
-export class CadastroComponent implements OnInit {
-  colunasExibidas: string[] = ['name', 'cadastro', 'position', 'actions'];
+export class CadastroComponent implements OnInit, AfterViewInit {
+  colunasExibidas: string[] = ['nome', 'matricula', 'cargo', 'actions'];
   dataSource = new MatTableDataSource<Employee>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private employeeService: FuncionarioService,
+    private funcionarioService: FuncionarioService,
   ) { }
 
   ngOnInit(): void {
-    this.loadEmployees();
+    this.carregarFuncionarios();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator; // Associa o paginador ao dataSource
   }
 
-  private loadEmployees(): void {
-    this.employeeService.getFuncionarios().subscribe(employees => {
-      this.dataSource.data = employees;
+  private carregarFuncionarios(): void {
+    this.funcionarioService.getFuncionarios().subscribe({
+      next: (funcionarios) => {
+        this.dataSource.data = funcionarios; // Atualiza os dados da tabela
+      },
+      error: (error) => {
+        console.error('Erro ao carregar funcionários:', error);
+      }
     });
   }
 
   deleteEmployee(id: number): void {
-    this.employeeService.deletarFucionario(id).subscribe(() => {
-      this.loadEmployees();
+    this.funcionarioService.deletarFucionario(id).subscribe({
+      next: () => {
+        this.carregarFuncionarios(); // Recarrega a lista após deletar
+      },
+      error: (error) => {
+        console.error('Erro ao deletar funcionário:', error);
+      }
     });
   }
-
 }
 
 
