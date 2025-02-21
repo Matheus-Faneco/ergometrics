@@ -1,6 +1,6 @@
 <div class="header">
   <h1 class="title">Relatório individual</h1>
-  <h3 class="employee">{{ employee.nome }}</h3>
+  <h3 class="employee">{{ funcionario.nome }}</h3>
 </div>
 
 <div class="container">
@@ -11,7 +11,7 @@
     <mat-card class="card">
       <span class="text">Total de alertas</span>
       <div class="content">
-        <p class="alert-number">{{ employee.total_alertas }} alertas</p>
+        <p class="alert-number">{{ funcionario.total_alertas }} alertas</p>
       </div>
     </mat-card>
 
@@ -19,7 +19,7 @@
     <mat-card class="card">
       <span class="text">Tempo total de má postura</span>
       <div class="content">
-        <p class="time-bad-posture">{{ employee.duracao_segundos }} segundos</p>
+        <p class="time-bad-posture">{{ funcionario.duracao_segundos }} segundos</p>
       </div>
     </mat-card>
   </div>
@@ -28,7 +28,7 @@
     <mat-card class="card-bottom">
       <span class="text-bottom">Observações</span>
       <div class="content-bottom">
-        <span>{{ employee.observacoes }}</span>
+        <span>{{ funcionario.observacoes }}</span>
         <p class="observation"></p>
       </div>
     </mat-card>

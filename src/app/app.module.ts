@@ -7,12 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { MonitorComponent } from './components/monitor/monitor.component';
-import { IndividualReportComponent } from './components/individual-report/individual-report.component';
-import { GeneralReportComponent } from './components/general-report/general-report.component';
-import { RegistrationComponent } from './components/registration/registration.component';
-import { UserManualComponent } from './components/user-manual/user-manual.component';
+import { BarraLateralComponent } from './components/barraLateral/barraLateral.component';
+import { MonitoramentoComponent } from './components/Monitoramento/monitoramento.component';
+import { RelatorioIndividualComponent } from './components/relatorioIndividual/relatorioIndividual.component';
+import { RelatorioGeralComponent } from './components/relatorioGeral/relatorioGeral.component';
+import { CadastroComponent } from './components/cadastro/cadastro.component';
+import { ManualDoUsuarioComponent } from './components/manualDoUsuario/manualDoUsuario.component';
 import { ChartComponent } from './components/chart/chart.component';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -39,29 +39,29 @@ import {
 } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatPaginator } from '@angular/material/paginator';
-import { EmployeeAddComponent } from './components/employee-add/employee-add.component';
+import { AdicionarFuncionarioComponent } from './components/adicionarFuncionario/adicionarFuncionario.component';
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {CardModule} from 'primeng/card';
 import {WebcamModule} from 'ngx-webcam';
 import { CamerasComponent } from './components/cameras/cameras.component';
-import { SearchEmployeeComponent } from './components/search-employee/search-employee.component';
+import { PesquisarFuncionarioComponent } from './components/pesquisarFuncionario/pesquisarFuncionario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SidebarComponent,
-    MonitorComponent,
-    IndividualReportComponent,
-    GeneralReportComponent,
-    RegistrationComponent,
-    UserManualComponent,
+    BarraLateralComponent,
+    MonitoramentoComponent,
+    RelatorioIndividualComponent,
+    RelatorioGeralComponent,
+    CadastroComponent,
+    ManualDoUsuarioComponent,
     ChartComponent,
-    EmployeeAddComponent,
+    AdicionarFuncionarioComponent,
     CamerasComponent,
-    SearchEmployeeComponent
+    PesquisarFuncionarioComponent
   ],
   imports: [
     // Angular

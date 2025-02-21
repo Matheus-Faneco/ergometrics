@@ -3,15 +3,14 @@ import {RelatorioGeralService} from '../../core/services/relatorio-geral.service
 import {RelatorioGeral} from '../../core/models/relatorio-geral';
 
 @Component({
-  selector: 'app-general-report',
-  templateUrl: './general-report.component.html',
-  styleUrl: './general-report.component.css'
+  selector: 'app-relatorioGeral',
+  templateUrl: './relatorioGeral.component.html',
+  styleUrl: './relatorioGeral.component.css'
 })
-export class GeneralReportComponent implements OnInit{
+export class RelatorioGeralComponent implements OnInit{
   relatorioGeral: RelatorioGeral = new RelatorioGeral();
 
   constructor(private relatorioGeralService: RelatorioGeralService) { }
-
 
   ngOnInit() {
     this.getRelatorioGeral()

@@ -4,7 +4,7 @@
       <h2 class="title">Cadastro de Funcionário</h2>
     </ng-template>
 
-    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formularioFuncionario" (ngSubmit)="onSubmit()">
       <div class="p-field full-width">
         <label for="nome" class="p-label">Nome</label>
         <input
@@ -13,7 +13,7 @@
           formControlName="nome"
           class="w-full"
         >
-        @if (employeeForm.get('nome')?.hasError('required')) {
+        @if (formularioFuncionario.get('nome')?.hasError('required')) {
           <small class="p-error">Nome é obrigatório</small>
         }
       </div>
@@ -27,7 +27,7 @@
           type="number"
           class="w-full"
         >
-        @if (employeeForm.get('matricula')?.hasError('required')) {
+        @if (formularioFuncionario.get('matricula')?.hasError('required')) {
           <small class="p-error">Matrícula é obrigatória</small>
         }
       </div>
@@ -40,13 +40,13 @@
           formControlName="cargo"
           class="w-full"
         >
-        @if (employeeForm.get('cargo')?.hasError('required')) {
+        @if (formularioFuncionario.get('cargo')?.hasError('required')) {
           <small class="p-error">Cargo é obrigatório</small>
         }
       </div>
 
       <div class="btn">
-        <button mat-flat-button type="submit" [disabled]="!employeeForm.valid">
+        <button mat-flat-button type="submit" [disabled]="!formularioFuncionario.valid">
           Salvar
         </button>
       </div>

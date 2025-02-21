@@ -69,7 +69,7 @@
 }
 
 .main-content {
-  margin-left: 270px; /* Espaço para evitar sobreposição com a sidebar */
+  margin-left: 270px; /* Espaço para evitar sobreposição com a barraLateral */
   flex: 1; /* Faz o conteúdo ocupar o espaço restante */
   padding: 20px; /* Adiciona espaçamento interno */
   border-radius: 10px;

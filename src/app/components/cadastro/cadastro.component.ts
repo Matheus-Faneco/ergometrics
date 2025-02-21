@@ -1,22 +1,22 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {EmployeeService} from '../../core/services/employee.service';
+import {FuncionarioService} from '../../core/services/funcionario.service';
 import {Employee} from '../../core/models/employee';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrl: './registration.component.css'
+  selector: 'app-cadastro',
+  templateUrl: './cadastro.component.html',
+  styleUrl: './cadastro.component.css'
 })
-export class RegistrationComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'registration', 'position', 'actions'];
+export class CadastroComponent implements OnInit {
+  colunasExibidas: string[] = ['name', 'cadastro', 'position', 'actions'];
   dataSource = new MatTableDataSource<Employee>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private employeeService: EmployeeService,
+    private employeeService: FuncionarioService,
   ) { }
 
   ngOnInit(): void {
@@ -28,13 +28,13 @@ export class RegistrationComponent implements OnInit {
   }
 
   private loadEmployees(): void {
-    this.employeeService.getEmployees().subscribe(employees => {
+    this.employeeService.getFuncionarios().subscribe(employees => {
       this.dataSource.data = employees;
     });
   }
 
   deleteEmployee(id: number): void {
-    this.employeeService.deleteEmployee(id).subscribe(() => {
+    this.employeeService.deletarFucionario(id).subscribe(() => {
       this.loadEmployees();
     });
   }

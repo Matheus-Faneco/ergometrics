@@ -9,33 +9,33 @@ import {Router} from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-  form!: FormGroup;
+  formulario!: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private costrutorForumlario: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private rota: Router
   ) {}
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
+    this.formulario = this.costrutorForumlario.group({
       matricula: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
       password: ['', [Validators.required]],
     });
   }
 
   submit() {
-    if (this.form.invalid) {
+    if (this.formulario.invalid) {
       console.error('Formulário inválido');
       return;
     }
 
     this.http.post(
       'http://127.0.0.1:8000/login',
-      this.form.getRawValue(),
+      this.formulario.getRawValue(),
       { withCredentials: true }
     ).subscribe({
-      next: () => this.router.navigate(['home']),
+      next: () => this.rota.navigate(['home']),
       error: (err) => console.error('Erro no login:', err),
     });
   }

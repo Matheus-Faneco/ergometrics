@@ -1,50 +1,50 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from './components/login/login.component';
-import {MonitorComponent} from './components/monitor/monitor.component';
-import {IndividualReportComponent} from './components/individual-report/individual-report.component';
-import {GeneralReportComponent} from './components/general-report/general-report.component';
-import {RegistrationComponent} from './components/registration/registration.component';
-import {UserManualComponent} from './components/user-manual/user-manual.component';
-import {SidebarComponent} from './components/sidebar/sidebar.component';
-import {EmployeeAddComponent} from './components/employee-add/employee-add.component';
+import {MonitoramentoComponent} from './components/Monitoramento/monitoramento.component';
+import {RelatorioIndividualComponent} from './components/relatorioIndividual/relatorioIndividual.component';
+import {RelatorioGeralComponent} from './components/relatorioGeral/relatorioGeral.component';
+import {CadastroComponent} from './components/cadastro/cadastro.component';
+import {ManualDoUsuarioComponent} from './components/manualDoUsuario/manualDoUsuario.component';
+import {BarraLateralComponent} from './components/barraLateral/barraLateral.component';
+import {AdicionarFuncionarioComponent} from './components/adicionarFuncionario/adicionarFuncionario.component';
 import {CamerasComponent} from './components/cameras/cameras.component';
-import {SearchEmployeeComponent} from './components/search-employee/search-employee.component';
+import {PesquisarFuncionarioComponent} from './components/pesquisarFuncionario/pesquisarFuncionario.component';
 import {HomeComponent} from './components/home/home.component';
 
 const routes: Routes = [
-  { path: 'home', component: SidebarComponent, children: [
+  { path: 'home', component: BarraLateralComponent, children: [
       {
         path: '',
         component: HomeComponent,
       },
       {
         path: 'acompanhamento',
-        component: MonitorComponent
+        component: MonitoramentoComponent
       },
       {
         path: 'lista-funcionarios',
-        component: SearchEmployeeComponent
+        component: PesquisarFuncionarioComponent
       },
       {
         path: 'relatorio-individual/:id',
-        component: IndividualReportComponent
+        component: RelatorioIndividualComponent
       },
       {
         path: 'relatorio-geral',
-        component: GeneralReportComponent
+        component: RelatorioGeralComponent
       },
       {
         path: 'cadastro',
-        component: RegistrationComponent
+        component: CadastroComponent
       },
       {
         path: 'adicionar-funcionario',
-        component: EmployeeAddComponent
+        component: AdicionarFuncionarioComponent
       },
       {
         path: 'manual',
-        component: UserManualComponent
+        component: ManualDoUsuarioComponent
       },
     ] },
   { path: 'login', component: LoginComponent },

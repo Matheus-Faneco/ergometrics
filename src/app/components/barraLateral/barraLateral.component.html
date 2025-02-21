@@ -1,10 +1,3 @@
-<!--O QUE FAZER: -->
-<!--TROCAR CONDICIONAIS PARA @IF-->
-<!--MELHORIAS:-->
-<!--COR AZUL SE MANTER AO ESTAR NA ABA CORRESPONDENTE-->
-<!--ANIMAÇAO QUANDO OS SUBMENUS APARECEREM AO CLICAR EM 'RELATORIO'-->
-<!--BOTÃO DE MANUAL DE USUÁRIO LÁ EMBAIXO-->
-
 <div class="container">
   <div class="sidebar">
     <div class="head">
@@ -32,7 +25,7 @@
             </button>
 
             <!-- RELATÓRIO INDIVIDUAL -->
-            @if (openSubMenu === 'relatorio') {
+            @if (abrirSubMenu === 'relatorio') {
               <ul class="sub-menu"  >
                 <li>
                   <button routerLink="/home/lista-funcionarios" class="menu-button">
