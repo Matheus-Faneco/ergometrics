@@ -29,10 +29,10 @@
 
 }
 button{
-  background-color:#055FFC;
-  width: 10%;
-  padding: 0.50rem;
+  background-color:#055FFC !important;
+  color: white !important;
 }
+
 small.p-error {
   display: block;
   margin-top: 0.25rem;

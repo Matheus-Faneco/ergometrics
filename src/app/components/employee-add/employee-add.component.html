@@ -46,13 +46,9 @@
       </div>
 
       <div class="btn">
-        <button
-          pButton
-          type="submit"
-          label="Salvar"
-          severity="primary"
-          [disabled]="!employeeForm.valid"
-        ></button>
+        <button mat-flat-button type="submit" [disabled]="!employeeForm.valid">
+          Salvar
+        </button>
       </div>
     </form>
   </p-card>

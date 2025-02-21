@@ -319,4 +319,5 @@ export class CamerasComponent implements OnInit, OnDestroy {
       tracks.forEach(track => track.stop());
     }
   }
+
 }

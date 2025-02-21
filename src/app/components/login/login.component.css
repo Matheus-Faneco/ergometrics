@@ -87,8 +87,15 @@ p{
   opacity: 0.6;
   padding-left: 55px;
 }
-.btn,button,input{
+input{
   border-radius: 35px;
+}
+
+button {
+  background-color: #055FFC !important;
+  color: white !important;
+  width: 238px !important;
+  height: 40px !important;
 }
 
 .login-form form{

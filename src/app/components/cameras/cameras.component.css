@@ -13,9 +13,10 @@
   padding: 0.5rem;
 }
 
-.btn-c {
-  padding: 1rem;
-
+button {
+  background-color: #055FFC !important;
+  margin-left: 20px  !important;
+  border-radius: 6px;
 }
 
 .video-preview {
