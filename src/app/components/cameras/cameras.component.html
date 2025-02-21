@@ -7,19 +7,10 @@
     <p></p>
   </div>
   <input pInputText type="tel" [(ngModel)]="matriculaFuncionario" placeholder="Digite a matrícula do funcionário" class="search-input">
-  <button (click)="buscarFuncionario()" mat-flat-button class="btn">Pesquisar</button>
 
-  <div *ngIf="funcionario">
-  <p><strong>Nome:</strong> {{ funcionario.nome }}</p>
-  <p><strong>Cargo:</strong> {{ funcionario.cargo }}</p>
-  </div>
-
-<button (click)="atribuirFuncionario()" mat-flat-button class="btn" [disabled]="!funcionario">
+<button (click)="atribuirFuncionario()" mat-flat-button class="btn">
   Confirmar Atribuição
 </button>
-  <button (click)="incrementarAlerta(1)" mat-flat-button class="btn">
-    Confirmar asdasdas
-  </button>
 </div>
 <!--EXIBIÇÃO DA CAMERA E KEYPOINS-->
 <div class="container-camera">

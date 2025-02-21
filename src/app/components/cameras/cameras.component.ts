@@ -273,7 +273,6 @@ export class CamerasComponent implements OnInit, OnDestroy {
             this.duracaoIncorreta = duration;
             console.log(`Ângulo incorreto por: ${this.duracaoIncorreta} ms no lado ${lado} (Ângulo: ${angle.toFixed(2)}°)`);
             this.iniciarTempoIncorreto = null;
-            this.atualizarDadosFuncionario( this.duracaoIncorreta, this.alertaCount);
           }
         }
       } else {
@@ -319,54 +318,6 @@ export class CamerasComponent implements OnInit, OnDestroy {
 
   private getMensagemDeErro(error: unknown): string {
     return error instanceof Error ? error.message : 'Erro desconhecido';
-  }
-
-
-  atualizarDadosFuncionario( duracaoSegundos: number, totalAlertas: number) {
-    // Preparando os dados para enviar
-    const dadosAtualizados = {
-      duracao_segundos: duracaoSegundos,
-      total_alertas: totalAlertas
-    };
-
-    // Criando o cabeçalho com o token de autenticação (caso seja necessário)
-    const headers = new HttpHeaders().set('Authorization', `Bearer seu_token_aqui`);
-
-    // Enviar a requisição PATCH para a API
-    this.http.put<any>(`http://localhost:8000/api/funcionarios/${2}/`, // URL da API com a matrícula
-      dadosAtualizados, // Dados a serem atualizados
-      { headers: headers } // Cabeçalhos (se necessário)
-    ).subscribe({
-      next: (response) => {
-        console.log('Funcionário atualizado com sucesso!', response);
-      },
-      error: (err) => {
-        console.error('Erro ao atualizar funcionário:', err);
-        alert('Erro ao atualizar funcionário');
-      }
-    });
-  }
-
-
-
-  funcionario: any = null; // Armazena os dados do funcionário pesquisado
-
-// Busca funcionário pela matrícula antes de atribuir
-  buscarFuncionario() {
-    if (!this.matriculaFuncionario) {
-      alert('Digite a matrícula do funcionário!');
-      return;
-    }
-
-    this.http.get<any>(`http://localhost:8000/api/funcionario/${this.matriculaFuncionario}/`).subscribe({
-      next: (data) => {
-        this.funcionario = data; // Atualiza os dados do funcionário
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Funcionário não encontrado!');
-      }
-    });
   }
 
   ngOnDestroy() {
