@@ -9,7 +9,7 @@
 //   ) {}
 //
 //   canActivate(): Observable<boolean> {
-//     return this.authService.isAuthenticated().pipe(
+//     const isAuthenticated().pipe(
 //       map(isAuth => {
 //         if (isAuth) return true;
 //         this.router.navigate(['/login']);
