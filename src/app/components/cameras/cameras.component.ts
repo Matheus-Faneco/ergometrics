@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
   selector: 'app-cameras',
@@ -23,6 +23,10 @@ export class CamerasComponent implements OnInit, OnDestroy {
   estaDetectando = false;
   mensagemDeStatus = 'Inicializando...';
   private cameraFrontal = false;
+
+
+  // Variável para contar os alertas
+  private alertaCount: number = 0;
 
   // Variáveis para controlar o tempo em que o ângulo está incorreto
   private iniciarTempoIncorreto: number | null = null;
@@ -231,8 +235,8 @@ export class CamerasComponent implements OnInit, OnDestroy {
           if (duration >= 5000) {
             this.duracaoIncorreta = duration;
             console.log(`Ângulo incorreto por: ${this.duracaoIncorreta} ms no lado ${lado} (Ângulo: ${angle.toFixed(2)}°)`);
-            this.posturaIncorretaDuracao(this.duracaoIncorreta, angle, lado);
             this.iniciarTempoIncorreto = null;
+            this.atualizarDadosFuncionario( this.duracaoIncorreta, this.alertaCount);
           }
         }
       } else {
@@ -267,9 +271,9 @@ export class CamerasComponent implements OnInit, OnDestroy {
 
   //Trata a duração registrada com ângulo incorreto.
   // Aqui você pode atualizar a interface ou enviar a informação para outro componente/serviço.
-  private posturaIncorretaDuracao(duracao: number, angulo: number, lado: string): void {
-    console.log(`O ângulo no lado ${lado} ficou incorreto por ${duracao} ms (Ângulo: ${angulo.toFixed(2)}°)`);
-  }
+  // private posturaIncorretaDuracao(duracao: number, angulo: number, lado: string): void {
+  //   console.log(`O ângulo no lado ${lado} ficou incorreto por ${duracao} ms (Ângulo: ${angulo.toFixed(2)}°)`);
+  // }
 
   private erroAoIdentificar(error: unknown) {
     this.mensagemDeStatus = `Erro: ${this.getMensagemDeErro(error)}`;
@@ -280,6 +284,54 @@ export class CamerasComponent implements OnInit, OnDestroy {
     return error instanceof Error ? error.message : 'Erro desconhecido';
   }
 
+
+  atualizarDadosFuncionario( duracaoSegundos: number, totalAlertas: number) {
+    // Preparando os dados para enviar
+    const dadosAtualizados = {
+      duracao_segundos: duracaoSegundos,
+      total_alertas: totalAlertas
+    };
+
+    // Criando o cabeçalho com o token de autenticação (caso seja necessário)
+    const headers = new HttpHeaders().set('Authorization', `Bearer seu_token_aqui`);
+
+    // Enviar a requisição PATCH para a API
+    this.http.put<any>(`http://localhost:8000/api/funcionarios/${2}/`, // URL da API com a matrícula
+      dadosAtualizados, // Dados a serem atualizados
+      { headers: headers } // Cabeçalhos (se necessário)
+    ).subscribe({
+      next: (response) => {
+        console.log('Funcionário atualizado com sucesso!', response);
+      },
+      error: (err) => {
+        console.error('Erro ao atualizar funcionário:', err);
+        alert('Erro ao atualizar funcionário');
+      }
+    });
+  }
+
+
+
+  funcionario: any = null; // Armazena os dados do funcionário pesquisado
+
+// Busca funcionário pela matrícula antes de atribuir
+  buscarFuncionario() {
+    if (!this.matriculaFuncionario) {
+      alert('Digite a matrícula do funcionário!');
+      return;
+    }
+
+    this.http.get<any>(`http://localhost:8000/api/funcionario/${this.matriculaFuncionario}/`).subscribe({
+      next: (data) => {
+        this.funcionario = data; // Atualiza os dados do funcionário
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Funcionário não encontrado!');
+      }
+    });
+  }
+
   ngOnDestroy() {
     this.estaDetectando = false;
     if (this.videoElement?.nativeElement.srcObject) {
@@ -287,4 +339,5 @@ export class CamerasComponent implements OnInit, OnDestroy {
       tracks.forEach(track => track.stop());
     }
   }
+
 }
