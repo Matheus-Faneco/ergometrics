@@ -39,7 +39,7 @@ export class CadastroComponent implements OnInit, AfterViewInit {
   }
 
   deleteEmployee(id: number): void {
-    this.funcionarioService.deletarFucionario(id).subscribe({
+    this.funcionarioService.deletarFuncionario(id).subscribe({
       next: () => {
         this.carregarFuncionarios(); // Recarrega a lista após deletar
       },

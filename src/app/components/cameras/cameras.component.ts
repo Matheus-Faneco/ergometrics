@@ -13,7 +13,7 @@ export class CamerasComponent implements OnInit, OnDestroy {
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private funcionarioService: FuncionarioService, private http: HttpClient) {
+  constructor(private http: HttpClient, private funcionarioService: FuncionarioService) {
   }
 
   //matricula do funcionario para atribuiçao
@@ -25,20 +25,6 @@ export class CamerasComponent implements OnInit, OnDestroy {
   mensagemDeStatus = 'Inicializando...';
   private cameraFrontal = false;
 
-  incrementarAlerta(id: number) {
-    this.funcionarioService.getIdFuncionario(id).subscribe((funcionario) => {
-      if (funcionario) {
-        const novoTotal = funcionario.total_alertas + 1;
-
-        this.funcionarioService.updateTotalAlertas(id, novoTotal).subscribe(() => {
-          funcionario.total_alertas = novoTotal;
-          console.log(`Total de alertas atualizado para o funcionário ${id}: ${novoTotal}`);
-        });
-      }
-    });
-  }
-
-
 
   // Variável para contar os alertas
   private alertaCount: number = 0;
@@ -47,13 +33,14 @@ export class CamerasComponent implements OnInit, OnDestroy {
   private iniciarTempoIncorreto: number | null = null;
   public duracaoIncorreta: number = 0;
 
+  // Faz a atribuição de Funcionario
   atribuirFuncionario() {
     if (!this.matriculaFuncionario) {
       alert('Digite a matrícula do funcionário!');
       return;
     }
 
-    // Requisição POST para atribuir o funcionário
+    // Faz a requisição POST
     this.http.post(
       'http://localhost:8000/api/camera/atribuir-funcionario/',
       { matricula: this.matriculaFuncionario },
@@ -61,33 +48,10 @@ export class CamerasComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: () => {
         alert('Funcionário atribuído com sucesso!');
-
-        // Se a duração incorreta for diferente de 0, atualiza o funcionário
-        if (this.duracaoIncorreta !== 0) {
-          // Dados a serem atualizados (exemplo)
-          const dadosAtualizados = { duracao: this.duracaoIncorreta };
-
-          // Cabeçalhos para a requisição PUT
-          const headers = { 'Content-Type': 'application/json' };
-
-          this.http.put<any>(
-            `http://localhost:8000/api/funcionarios/${1}/`,
-            dadosAtualizados,
-            { headers: headers }
-          ).subscribe({
-            next: (response) => {
-              console.log('Funcionário atualizado com sucesso!', response);
-            },
-            error: (err) => {
-              console.error('Erro ao atualizar funcionário:', err);
-              alert('Erro ao atualizar funcionário');
-            }
-          });
-        }
       },
       error: (err) => {
-        console.error('Erro ao atribuir funcionário:', err);
-        alert('Erro ao atribuir funcionário');
+        console.error(err);
+        alert('Erro ao atribuir funcionário!');
       }
     });
   }
@@ -249,7 +213,6 @@ export class CamerasComponent implements OnInit, OnDestroy {
     nomeCotovelo: string,
     nomePunho: string,
     lado: string
-
   ): void {
     const ombro = pose.keypoints.find(kp => kp.name === nomeOmbro);
     const cotovelo = pose.keypoints.find(kp => kp.name === nomeCotovelo);
@@ -272,15 +235,21 @@ export class CamerasComponent implements OnInit, OnDestroy {
           if (duration >= 5000) {
             this.duracaoIncorreta = duration;
             console.log(`Ângulo incorreto por: ${this.duracaoIncorreta} ms no lado ${lado} (Ângulo: ${angle.toFixed(2)}°)`);
+
+            // Enviar o alerta e tempo
+            if (this.funcionario) {
+              this.incrementarAlerta(this.funcionario.id);  // Atualiza alertas
+              this.incrementarTempo(this.funcionario.id);   // Atualiza tempo incorreto
+            }
+
             this.iniciarTempoIncorreto = null;
           }
         }
       } else {
-        this.iniciarTempoIncorreto = null;
+        this.iniciarTempoIncorreto = null;  // Reseta o tempo caso o ângulo esteja correto
       }
     }
   }
-
   // Calcula o ângulo formado pelos pontos A, B e C, onde B é o vértice.
   // Neste caso, A: cotovelo, B: ombro e C: quadril.
   private calcularAngulo(
@@ -305,12 +274,6 @@ export class CamerasComponent implements OnInit, OnDestroy {
   }
 
 
-  //Trata a duração registrada com ângulo incorreto.
-  // Aqui você pode atualizar a interface ou enviar a informação para outro componente/serviço.
-  // private posturaIncorretaDuracao(duracao: number, angulo: number, lado: string): void {
-  //   console.log(`O ângulo no lado ${lado} ficou incorreto por ${duracao} ms (Ângulo: ${angulo.toFixed(2)}°)`);
-  // }
-
   private erroAoIdentificar(error: unknown) {
     this.mensagemDeStatus = `Erro: ${this.getMensagemDeErro(error)}`;
     console.error(error);
@@ -319,6 +282,55 @@ export class CamerasComponent implements OnInit, OnDestroy {
   private getMensagemDeErro(error: unknown): string {
     return error instanceof Error ? error.message : 'Erro desconhecido';
   }
+
+
+  funcionario: any = null; // Armazena os dados do funcionário pesquisado
+
+// Busca funcionário pela matrícula antes de atribuir
+  buscarFuncionario() {
+    if (!this.matriculaFuncionario) {
+      alert('Digite a matrícula do funcionário!');
+      return;
+    }
+
+    this.http.get<any>(`http://localhost:8000/api/funcionario/${this.matriculaFuncionario}/`).subscribe({
+      next: (data) => {
+        this.funcionario = data; // Atualiza os dados do funcionário
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Funcionário não encontrado!');
+      }
+    });
+  }
+
+
+  incrementarAlerta(id: number) {
+    this.funcionarioService.getIdFuncionario(id).subscribe((funcionario) => {
+      if (funcionario) {
+        const novoTotal = funcionario.total_alertas + 1;
+
+        this.funcionarioService.updateTotalAlertas(id, novoTotal).subscribe(() => {
+          funcionario.total_alertas = novoTotal;
+          console.log(`Total de alertas atualizado para o funcionário ${id}: ${novoTotal}`);
+        });
+      }
+    });
+  }
+
+  incrementarTempo(id: number) {
+    this.funcionarioService.getIdFuncionario(id).subscribe((funcionario) => {
+      if (funcionario) {
+        const novoTotal = funcionario.duracao_segundos + this.duracaoIncorreta;
+
+        this.funcionarioService.updateTempo(id, novoTotal).subscribe(() => {
+          funcionario.duracao_segundos = novoTotal;
+          console.log(`Total de tempo atualizado para o funcionário ${id}: ${novoTotal}`);
+        });
+      }
+    });
+  }
+
 
   ngOnDestroy() {
     this.estaDetectando = false;

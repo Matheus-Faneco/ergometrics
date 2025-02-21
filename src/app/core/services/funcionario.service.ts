@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Employee} from '../models/employee';
+import { Employee } from '../models/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,7 @@ export class FuncionarioService {
   getFuncionarios(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.apiUrlFuncionario);
   }
+
   getIdFuncionario(id: number): Observable<Employee> {
     return this.http.get<Employee>(`${this.apiUrlFuncionario}${id}/`);
   }
@@ -22,11 +23,20 @@ export class FuncionarioService {
     return this.http.post<Employee>(this.apiUrlFuncionario, employee);
   }
 
-  deletarFucionario(id: number): Observable<void> {
+  deletarFuncionario(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrlFuncionario}${id}/`);
   }
 
+  // Corrigindo o erro na interpolação de string e no corpo da requisição
   updateTotalAlertas(id: number, totalAlertas: number) {
-    return this.http.patch(`${this.apiUrlFuncionario}${id}/`, { total_alertas: totalAlertas });
+    return this.http.patch(`${this.apiUrlFuncionario}${id}/`,
+      { total_alertas: totalAlertas }
+    );
+  }
+
+  updateTempo(id: number, tempo: number) {
+    return this.http.patch(`${this.apiUrlFuncionario}${id}/`,
+      { duracao_segundos: tempo }
+    );
   }
 }
